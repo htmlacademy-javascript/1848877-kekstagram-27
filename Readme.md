@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Анюта Лямытских](https://up.htmlacademy.ru/javascript/27/user/1848877).
-* Наставник: `Неизвестно`.
+* Наставник: [Андрей Устименко](https://htmlacademy.ru/profile/spiritmoon).
 
 ---
 

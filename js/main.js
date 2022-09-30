@@ -1,8 +1,8 @@
 const getRandomNumber = function (minNumber, maxNumber) {
-let min = Math.ceil(minNumber);
-let max = Math.floor(maxNumber);
+const min = Math.ceil(minNumber);
+const max = Math.floor(maxNumber);
 if (max < min) {
-  let Number = min;
+  const Number = min;
   min = max;
   max = Number;
 }

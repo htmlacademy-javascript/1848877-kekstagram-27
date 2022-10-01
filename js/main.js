@@ -12,7 +12,5 @@ const getRandomNumber = (minNumber, maxNumber) => {
   return Math.floor (Math.random() * (max - min + 1)) + min;
 };
 getRandomNumber (1, 10);
-const getCheckStringLength = (stringToTest , maxLength) => {
-  return (stringToTest.length < maxLength) ? (true): (false);
-};
+const getCheckStringLength = (stringToTest , maxLength) => (stringToTest.length < maxLength);
 getCheckStringLength ('House', 10);

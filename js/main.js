@@ -73,12 +73,12 @@ const getRandomArrayElement = (elements) => elements[getRandomNumber(0, elements
 
 const getRandomPhotoInformation = (v, index) => ({
   id: index + 1,
-  url: 'photos/'+ (index + 1) + '.jpg',
+  url: `photos/${ index + 1 }.jpg`,
   description: getRandomArrayElement(photoInformation.description),
   likes: getRandomNumber (15, 200),
   comments: {
     id: index + 1,
-    avatar: 'img/avatar-' + getRandomNumber (1, 6) + '.svg',
+    avatar: `img/avatar-${ getRandomNumber (1, 6) }.svg`,
     message: getRandomArrayElement(photoInformation.comments.message),
     name: getRandomArrayElement(photoInformation.comments.name)
   }

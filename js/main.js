@@ -88,4 +88,3 @@ const LENGTH_ARRAY = 25;
 
 const getRandomPhotosInformation = Array.from({length: LENGTH_ARRAY}, getRandomPhotoInformation);
 
-console.log(getRandomPhotosInformation);

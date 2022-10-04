@@ -71,13 +71,13 @@ const getRandomNumber = (minNumber, maxNumber) => {
 
 const getRandomArrayElement = (elements) => elements[getRandomNumber(0, elements.length - 1)];
 
-const getRandomPhotoInformation = (v, index) => ({
-  id: index + 1,
-  url: `photos/${ index + 1 }.jpg`,
+const getRandomPhotoInformation = (v, i) => ({
+  id: i + 1,
+  url: `photos/${ i + 1 }.jpg`,
   description: getRandomArrayElement(photoInformation.description),
   likes: getRandomNumber (15, 200),
   comments: {
-    id: index + 1,
+    id: i + 1,
     avatar: `img/avatar-${ getRandomNumber (1, 6) }.svg`,
     message: getRandomArrayElement(photoInformation.comments.message),
     name: getRandomArrayElement(photoInformation.comments.name)
@@ -88,3 +88,5 @@ const LENGTH_ARRAY = 25;
 
 const getRandomPhotosInformation = Array.from({length: LENGTH_ARRAY}, getRandomPhotoInformation);
 
+// eslint-disable-next-line no-console
+console.log(getRandomPhotosInformation);

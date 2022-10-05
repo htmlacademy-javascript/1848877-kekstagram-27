@@ -1,56 +1,51 @@
-const photoInformation = {
-  id: 0,
-  url: '',
-  description: [
-    'Кушаю кексик',
-    'Уронил банан',
-    'Это я и моя бабушка',
-    'Мой завтрак',
-    'Люблю котиков',
-    'Угадай, где я'
-  ],
-  likes: 0,
-  comments:
-      { id: 0,
-        avatar: '',
-        message: [
-          'Всё отлично!',
-          'В целом всё неплохо. Но не всё.',
-          'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
-          'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
-          'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
-          'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
-        ],
-        name: [
-          'Kate',
-          'Piter',
-          'Oliver',
-          'George',
-          'Jack',
-          'Olivia',
-          'Harry',
-          'Amelia ',
-          'Jacob ',
-          'Emily',
-          'Charlie',
-          'Ava ',
-          'Thomas',
-          'Jessica',
-          'Oscar',
-          'Isabella',
-          'William',
-          'Sophie',
-          'James',
-          'Mia',
-          'Ruby',
-          'Lily',
-          'Anna',
-          'Djonson',
-          'Azazel',
-          'Zirael'
-        ]
-      }
-};
+const NAME = [
+  'Kate',
+  'Piter',
+  'Oliver',
+  'George',
+  'Jack',
+  'Olivia',
+  'Harry',
+  'Amelia ',
+  'Jacob ',
+  'Emily',
+  'Charlie',
+  'Ava ',
+  'Thomas',
+  'Jessica',
+  'Oscar',
+  'Isabella',
+  'William',
+  'Sophie',
+  'James',
+  'Mia',
+  'Ruby',
+  'Lily',
+  'Anna',
+  'Djonson',
+  'Azazel',
+  'Zirael'
+];
+
+const DESCRIPTION = [
+  'Кушаю кексик',
+  'Уронил банан',
+  'Это я и моя бабушка',
+  'Мой завтрак',
+  'Люблю котиков',
+  'Угадай, где я'
+];
+
+const MESSAGE = [
+  'Всё отлично!',
+  'В целом всё неплохо. Но не всё.',
+  'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
+  'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
+  'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
+  'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
+];
+
+const PHOTO_INFORMATION_COUNTER = 25;
 
 const getRandomNumber = (minNumber, maxNumber) => {
   let min = Math.ceil(minNumber);
@@ -71,22 +66,19 @@ const getRandomNumber = (minNumber, maxNumber) => {
 
 const getRandomArrayElement = (elements) => elements[getRandomNumber(0, elements.length - 1)];
 
-const getRandomPhotoInformation = (v, i) => ({
-  id: i + 1,
-  url: `photos/${ i + 1 }.jpg`,
-  description: getRandomArrayElement(photoInformation.description),
+const getRandomPhotoInformation = (id) => ({
+  id: id + 1,
+  url: `photos/${ id + 1 }.jpg`,
+  description: getRandomArrayElement(DESCRIPTION),
   likes: getRandomNumber (15, 200),
   comments: {
-    id: i + 1,
+    id: id + 1,
     avatar: `img/avatar-${ getRandomNumber (1, 6) }.svg`,
-    message: getRandomArrayElement(photoInformation.comments.message),
-    name: getRandomArrayElement(photoInformation.comments.name)
+    message: getRandomArrayElement(MESSAGE),
+    name: getRandomArrayElement(NAME)
   }
 });
 
-const LENGTH_ARRAY = 25;
+const getRandomPhotosInformation = (length) => Array.from({length: length}, (_, index) => getRandomPhotoInformation(index));
 
-const getRandomPhotosInformation = Array.from({length: LENGTH_ARRAY}, getRandomPhotoInformation);
-
-// eslint-disable-next-line no-console
-console.log(getRandomPhotosInformation);
+getRandomPhotosInformation(PHOTO_INFORMATION_COUNTER);

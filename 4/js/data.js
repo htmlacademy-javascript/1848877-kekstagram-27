@@ -62,8 +62,6 @@ const getRandomPhotoInformation = (id) => ({
   }
 });
 
-const getRandomPhotosInformation = (length) => Array.from({length: length}, (_, index) => getRandomPhotoInformation(index));
+export const getRandomPhotosInformation = (length) => Array.from({length: length}, (_, index) => getRandomPhotoInformation(index));
 
 getRandomPhotosInformation(PHOTO_INFORMATION_COUNTERS);
-
-export {getRandomPhotosInformation};

@@ -47,7 +47,7 @@ const MESSAGES = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
 
-const PHOTO_INFORMATION_COUNTERS = 25;
+export const PHOTO_INFORMATION_COUNTERS = 25;
 
 const getRandomPhotoInformation = (id) => ({
   id: id + 1,

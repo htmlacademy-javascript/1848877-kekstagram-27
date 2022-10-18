@@ -3,3 +3,4 @@ import './data.js';
 import './miniatures.js';
 import {getRandomPhotosInformation} from './data.js';
 getRandomPhotosInformation();
+

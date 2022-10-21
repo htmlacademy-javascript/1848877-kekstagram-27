@@ -56,14 +56,10 @@ const createComment = (id) => ({
   name: getRandomArrayElement(NAMES)
 });
 
-const createPhotoComments = () => {
-  const comments = Array.from(
-    {length:getRandomNumber(0, 25)},
-    (_, index) => createComment(index + 1),
-  );
-
-  return comments;
-};
+const createPhotoComments = () => Array.from(
+  {length: getRandomNumber(0, 25)},
+  (_, index) => createComment(index),
+);
 
 const getRandomPhotoInformation = (id) => ({
   id: id + 1,
@@ -74,6 +70,6 @@ const getRandomPhotoInformation = (id) => ({
 });
 
 export const getRandomPhotosInformation = (length) => Array.from(
-  {length: length},
+  {length},
   (_, index) => getRandomPhotoInformation(index)
 );

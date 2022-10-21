@@ -22,6 +22,20 @@ export const toggleModal = () => {
   }
 };
 
+export const photoClickHandler = (element) => {
+  element.onclick = function (evt) {
+    const target = evt.target.closest('.picture');
+    if(!target){
+      body.classList.remove('modal-open');
+      socialCommentCount.classList.add('hidden');
+      commentsLoader.classList.add('hidden');
+      bigPicture.classList.add('hidden');
+    }
+    bigPicture.classList.remove('hidden');
+    body.classList.add('modal-open');
+  };
+};
+
 document.addEventListener('keydown', (evt)=> {
   if(evt.keyCode === 27){
     toggleModal();

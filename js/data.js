@@ -50,7 +50,7 @@ const MESSAGES = [
 export const PHOTO_INFORMATION_COUNTERS = 25;
 
 const createComment = (id) => ({
-  id: id + 1,
+  id,
   avatar: `img/avatar-${getRandomNumber(1, 6)}.svg`,
   message: getRandomArrayElement(MESSAGES),
   name: getRandomArrayElement(NAMES)
@@ -58,12 +58,12 @@ const createComment = (id) => ({
 
 const createPhotoComments = () => Array.from(
   {length: getRandomNumber(0, 25)},
-  (_, index) => createComment(index),
+  (_, index) => createComment(index + 1),
 );
 
 const getRandomPhotoInformation = (id) => ({
-  id: id + 1,
-  url: `photos/${ id + 1 }.jpg`,
+  id,
+  url: `photos/${id}.jpg`,
   description: getRandomArrayElement(DESCRIPTIONS),
   likes: getRandomNumber (15, 200),
   comments: createPhotoComments(),
@@ -71,5 +71,5 @@ const getRandomPhotoInformation = (id) => ({
 
 export const getRandomPhotosInformation = (length) => Array.from(
   {length},
-  (_, index) => getRandomPhotoInformation(index)
+  (_, index) => getRandomPhotoInformation(index + 1)
 );

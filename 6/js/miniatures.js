@@ -1,29 +1,46 @@
 import {getRandomPhotosInformation, PHOTO_INFORMATION_COUNTERS} from './data.js';
-import {toggleModal, enlargePhoto} from './Size-Full-Images.js';
+import {renderPictureDialog} from './size-full-images.js';
+
 const thumbnailPicture = document.querySelector('#picture').content.querySelector('.picture');
-const thumbnailContainer = document.querySelector('.pictures');
+const gallery = document.querySelector('.pictures');
+const imageContainer = document.querySelector('.photos-gallery');
 
-const randomPhotoInformation = getRandomPhotosInformation(PHOTO_INFORMATION_COUNTERS);
+const randomsPhoto = getRandomPhotosInformation(PHOTO_INFORMATION_COUNTERS);
+//создание фотографии (миниатюры)
+const createPictureElement = (data) => {
+  const { url, comments, likes, id} = data;
+  const photoElement = thumbnailPicture.cloneNode(true);
 
-const renderPhoto = (posts) => {
-  const photoInformationFragment = document.createDocumentFragment();
+  photoElement.classList.add('content');
+  photoElement.dataset.id = id;
+  photoElement.querySelector('.picture__img').src = url;
+  photoElement.querySelector('.picture__comments').textContent = comments.length;
+  photoElement.querySelector('.picture__likes').textContent = likes;
 
-  posts.forEach((item) => {
-    const { url, comments, likes} = item;
-    const randomPicture = thumbnailPicture.cloneNode(true);
+  return photoElement;
+};
+//обработчик, срабатывает если кликают по миниатюре, то тогда открывается большая фотография
+gallery.addEventListener('click', (evt) => {
+  evt.preventDefault();
 
-    randomPicture.querySelector('.picture__img').src = url;
-    randomPicture.querySelector('.picture__comments').textContent = comments.length;
-    randomPicture.querySelector('.picture__likes').textContent = likes;
+  const element = evt.target.closest('[data-id]');
 
-    photoInformationFragment.appendChild(randomPicture);
+  const picture = element ? randomsPhoto.find((item) => item.id === Number(element.dataset.id)) : null;
 
-    randomPicture.addEventListener('click', () => {
-      toggleModal();
-      enlargePhoto(item);
-    });
+  if (picture) {
+    renderPictureDialog(picture);
+  }
+});
+//добавление фотографии в контейнер
+const renderPhoto = (photos) => {
+  const photosFragment = document.createDocumentFragment();
+
+  photos.forEach((photo) => {
+    photosFragment.appendChild(createPictureElement(photo));
   });
-  thumbnailContainer.appendChild(photoInformationFragment);
+
+  imageContainer.innerHTML = '';
+  imageContainer.appendChild(photosFragment);
 };
 
-renderPhoto(randomPhotoInformation);
+renderPhoto(randomsPhoto);

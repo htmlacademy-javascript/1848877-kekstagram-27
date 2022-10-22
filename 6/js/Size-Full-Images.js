@@ -10,28 +10,30 @@ const socialCommentCount = bigPicture.querySelector('.social__comment-count');
 const commentsLoader = bigPicture.querySelector('.comments-loader');
 const body = document.querySelector('body');
 
-export const toggleModal = () => {
-  if (bigPicture.classList.contains('hidden')){
-    bigPicture.classList.remove('hidden');
-    body.classList.add('modal-open');
-  } else {
-    body.classList.remove('modal-open');
-    socialCommentCount.classList.add('hidden');
-    commentsLoader.classList.add('hidden');
-    bigPicture.classList.add('hidden');
+//обработчик закрытия по кнопке Esc
+const onEscKeyDown = (evt) => {
+  if(evt.key === 'Escape'){
+    evt.preventDefault();
+    hideBigPicture();
   }
 };
 
-document.addEventListener('keydown', (evt)=> {
-  if(evt.keyCode === 27){
-    toggleModal();
-  }
-});
-closeButton.addEventListener('click', ()=> {
-  toggleModal();
-});
+//функция, закрывающая окно
+function hideBigPicture () {
+  bigPicture.classList.add('hidden'); // добавляется класс, для скрывания окна
+  body.classList.remove('modal-open'); // добавл-ся класс для активации скролла
+  document.removeEventListener('keydown', onEscKeyDown); //удаления обработчика закрытия по Esc
+}
 
-export const enlargePhoto = (item) => {
+//закрытие по кнопке
+const onCancelButtonClick = () => {
+  hideBigPicture();
+};
+
+closeButton.addEventListener('click', onCancelButtonClick); //обработчик закрытия по кнопке
+
+//создание аватарок, лайков, комментариев
+export const renderPictureDialog = (item) => {
   const fragment = document.createDocumentFragment();
   const {url, comments, likes, description} = item;
 
@@ -53,3 +55,20 @@ export const enlargePhoto = (item) => {
   socialComments.appendChild(fragment);
 };
 
+//обработчик, срабатывающий при нажатии на фотографию, если есть класс .picture
+export const onPhotoClick = (evt) => {
+  const target = evt.target.closest('.pictures');
+
+  if(!target) {
+    hideBigPicture();
+    socialCommentCount.classList.add('hidden');
+    commentsLoader.classList.add('hidden');
+  }
+  socialCommentCount.classList.add('hidden');
+  commentsLoader.classList.add('hidden');
+  bigPicture.classList.remove('hidden');
+  body.classList.add('modal-open');
+  document.addEventListener('keydown', onEscKeyDown);
+};
+//обработчик для вызова фотографии(удаление/добавление классов)
+document.querySelector('.pictures').addEventListener('click', onPhotoClick);

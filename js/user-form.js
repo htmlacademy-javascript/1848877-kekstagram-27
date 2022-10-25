@@ -4,9 +4,9 @@ const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 const body = document.querySelector('body');
 const uploadCancel = document.querySelector('#upload-cancel');
 const imgUploadForm = document.querySelector('.img-upload__form');
-const submitButton = document.querySelector('.img-upload__submit');
+//const submitButton = document.querySelector('.img-upload__submit');
 const commentsField = document.querySelector('.text__description');
-const hashtagField = document.querySelector('.text__hashtags')
+const hashtagField = document.querySelector('.text__hashtags');
 
 
 const MAX_HASHTAGS = 5;
@@ -17,12 +17,12 @@ const createHashtagArray = (value) => {
   value.trim().toLowerCase().split(' ');
 };
 //проверка на валидность хештега
-const isValidHashtag = (value) => {
+/*const isValidHashtag = (value) => {
   const hashtag = createHashtagArray(value);
   const registr = /^#[a-zа-яё0-9]{1, 19}$/i;
   const isValid = (value) => registr.test(value);
   return hashtag.every(isValid);
-};
+};*/
 // не более 5 хештегов
 const getNumberOfHashtags = (value) => {
   const hashtags = createHashtagArray(value);
@@ -47,7 +47,7 @@ const pristine = new Pristine(imgUploadForm, {
 
 pristine.addValidator(hashtagField, getUniqeHashtag,'один и тот же хэш-тег не может быть использован дважды');
 pristine.addValidator(hashtagField, getNumberOfHashtags,'нельзя указать больше пяти хэш-тегов');
-pristine.addValidator(hashtagField, isValidHashtag,'Хэштег должен начинаться с "#", содержать буквы, числа (не более 20 символов, включая #)');
+//pristine.addValidator(hashtagField, isValidHashtag,'Хэштег должен начинаться с "#", содержать буквы, числа (не более 20 символов, включая #)');
 pristine.addValidator(commentsField, getLengthComment, `Не более ${MAX_LENGTH} символов`);
 
 imgUploadForm.addEventListener('submit', (evt) => {

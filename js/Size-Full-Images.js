@@ -45,13 +45,13 @@ const createComment = ({ avatar, name, message }) => {
   return socialComment;
 };
 
-let commentsArray = [];
+//let commentsArray = [];
 
 export const renderPictureDialog = (picture) => {
   const commentFragment = document.createDocumentFragment();
   const { url, comments, likes, description } = picture;
 
-  commentsArray = comments;
+  //commentsArray = comments;
   bigPictureImg.src = url;
   likesCount.textContent = likes;
   commentsCount.textContent = comments.length;

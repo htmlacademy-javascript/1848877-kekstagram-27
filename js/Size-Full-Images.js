@@ -16,8 +16,6 @@ const commentsCount = document.querySelector('.comments-count');
 
 //const MAX_NUMBER_OF_COMMENTS = 5;
 
-
-
 //обработчик закрытия по кнопке
 export const onKeyDown = (evt) => {
   if (evt.key === 'Escape') {

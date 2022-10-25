@@ -73,3 +73,5 @@ export const getRandomPhotosInformation = (length) => Array.from(
   {length},
   (_, index) => getRandomPhotoInformation(index + 1)
 );
+
+export const isMaxLength = (string, maxLength) => string.length <= maxLength;

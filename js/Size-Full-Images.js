@@ -8,15 +8,15 @@ const socialCaption = document.querySelector('.social__caption');
 const bigPictureImg = document.querySelector('.big-picture__img img');
 const likesCount = document.querySelector('.likes-count');
 const commentsCount = document.querySelector('.comments-count');
-const socialCommentCount = bigPicture.querySelector('.social__comment-count');
-const commentsLoader = bigPicture.querySelector('.comments-loader');
-const body = document.body;
-const bigPictureSocial = document.querySelector('.big-picture__social');
-const showComment = document.querySelector('.comments-shown');
+//const socialCommentCount = bigPicture.querySelector('.social__comment-count');
+//const commentsLoader = bigPicture.querySelector('.comments-loader');
+//const body = document.body;
+//const bigPictureSocial = document.querySelector('.big-picture__social');
+//const showComment = document.querySelector('.comments-shown');
 
-const MAX_NUMBER_OF_COMMENTS = 5;
+//const MAX_NUMBER_OF_COMMENTS = 5;
 
-let commentsArray = [];
+
 
 //обработчик закрытия по кнопке
 export const onKeyDown = (evt) => {
@@ -45,6 +45,7 @@ const createComment = ({ avatar, name, message }) => {
   return socialComment;
 };
 
+let commentsArray = [];
 
 export const renderPictureDialog = (picture) => {
   const commentFragment = document.createDocumentFragment();

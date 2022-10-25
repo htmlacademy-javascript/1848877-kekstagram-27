@@ -63,7 +63,7 @@ export const renderPictureDialog = (picture) => {
   socialComments.innerHTML = '';
   socialComments.appendChild(commentFragment);
 };
-// максимум показывается 5 комментариев
+/*// максимум показывается 5 комментариев
 export const loadComments = () => {
   createComment(commentsArray.splice(0, MAX_NUMBER_OF_COMMENTS));
   showComment.textContent = socialComments.querySelectorAll('.social__comment').length;
@@ -72,5 +72,5 @@ export const loadComments = () => {
   }
 };
 
-commentsLoader.addEventListener('click', loadComments);
+commentsLoader.addEventListener('click', loadComments);*/
 

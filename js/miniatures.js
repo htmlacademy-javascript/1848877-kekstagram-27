@@ -1,4 +1,4 @@
-import {renderPictureDialog, onKeyDown, loadComments} from './size-full-images.js';
+import {renderPictureDialog, onKeyDown, /*loadComments*/} from './size-full-images.js';
 import {getRandomPhotosInformation, PHOTO_INFORMATION_COUNTERS} from './data.js';
 
 const bigPicture = document.querySelector('.big-picture');
@@ -51,7 +51,7 @@ gallery.addEventListener('click', (evt) => {
   bigPicture.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onKeyDown);
-  loadComments();
+  //loadComments();
 });
 
 //добавление фотографии в контейнер

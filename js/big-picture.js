@@ -1,4 +1,3 @@
-import { hideBigPicture } from './miniatures.js';
 import { closeOverlay } from './user-form.js';
 const bigPicture = document.querySelector('.big-picture');
 const closeButton = bigPicture.querySelector('#picture-cancel');
@@ -8,15 +7,28 @@ const socialCaption = document.querySelector('.social__caption');
 const bigPictureImg = document.querySelector('.big-picture__img img');
 const likesCount = document.querySelector('.likes-count');
 const commentsCount = document.querySelector('.comments-count');
-//const socialCommentCount = bigPicture.querySelector('.social__comment-count');
-//const commentsLoader = bigPicture.querySelector('.comments-loader');
-//const body = document.body;
+const socialCommentCount = bigPicture.querySelector('.social__comment-count');
+const commentsLoader = bigPicture.querySelector('.comments-loader');
+const body = document.body;
 //const bigPictureSocial = document.querySelector('.big-picture__social');
-//const showComment = document.querySelector('.comments-shown');
+//сonst showComment = document.querySelector('.comments-shown');
 
 //const MAX_NUMBER_OF_COMMENTS = 5;
 
 //обработчик закрытия по кнопке
+export const hideBigPicture = () => {
+  bigPicture.classList.add('hidden'); // добавляется класс, для скрывания окна
+  body.classList.remove('modal-open'); // добавл-ся класс для активации скролла
+  //document.removeEventListener('keydown', onKeyDown); //удаления обработчика закрытия по Esc
+};
+
+export const openBigPicture = () => {
+  socialCommentCount.classList.remove('hidden');
+  commentsLoader.classList.remove('hidden');
+  bigPicture.classList.remove('hidden');
+  body.classList.add('modal-open');
+};
+
 export const onKeyDown = (evt) => {
   if (evt.key === 'Escape') {
     evt.preventDefault();
@@ -72,4 +84,6 @@ export const loadComments = () => {
 };
 
 commentsLoader.addEventListener('click', loadComments);*/
+
+//функция, закрывающая окно
 

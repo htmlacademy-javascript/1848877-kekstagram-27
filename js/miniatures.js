@@ -1,10 +1,10 @@
-import {renderPictureDialog, onKeyDown, /*loadComments*/} from './size-full-images.js';
+import {renderPictureDialog, onKeyDown, hideBigPicture, openBigPicture /*loadComments*/} from './big-picture.js';
 import {getRandomPhotosInformation, PHOTO_INFORMATION_COUNTERS} from './data.js';
 
 const bigPicture = document.querySelector('.big-picture');
 const socialCommentCount = bigPicture.querySelector('.social__comment-count');
 const commentsLoader = bigPicture.querySelector('.comments-loader');
-const body = document.body;
+//const body = document.body;
 const thumbnailPicture = document.querySelector('#picture').content.querySelector('.picture');
 const gallery = document.querySelector('.pictures');
 const imageContainer = document.querySelector('.photos-gallery');
@@ -23,13 +23,6 @@ const createPictureElement = (data) => {
   return photoElement;
 };
 
-//функция, закрывающая окно
-export const hideBigPicture = () => {
-  bigPicture.classList.add('hidden'); // добавляется класс, для скрывания окна
-  body.classList.remove('modal-open'); // добавл-ся класс для активации скролла
-  document.removeEventListener('keydown', onKeyDown); //удаления обработчика закрытия по Esc
-};
-
 //обработчик, срабатывает если кликают по миниатюре, то тогда открывается большая фотография
 gallery.addEventListener('click', (evt) => {
   evt.preventDefault();
@@ -46,12 +39,9 @@ gallery.addEventListener('click', (evt) => {
     socialCommentCount.classList.add('hidden');
     commentsLoader.classList.add('hidden');
   }
-  socialCommentCount.classList.remove('hidden');
-  commentsLoader.classList.remove('hidden');
-  bigPicture.classList.remove('hidden');
-  body.classList.add('modal-open');
+  openBigPicture();
   document.addEventListener('keydown', onKeyDown);
-  //loadComments();
+//loadComments();
 });
 
 //добавление фотографии в контейнер

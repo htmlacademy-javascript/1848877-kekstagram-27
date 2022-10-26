@@ -49,19 +49,29 @@ const MESSAGES = [
 
 export const PHOTO_INFORMATION_COUNTERS = 25;
 
-const getRandomPhotoInformation = (id) => ({
-  id: id + 1,
-  url: `photos/${ id + 1 }.jpg`,
-  description: getRandomArrayElement(DESCRIPTIONS),
-  likes: getRandomNumber (15, 200),
-  comments: {
-    id: id + 1,
-    avatar: `img/avatar-${ getRandomNumber (1, 6) }.svg`,
-    message: getRandomArrayElement(MESSAGES),
-    name: getRandomArrayElement(NAMES)
-  }
+const createComment = (id) => ({
+  id,
+  avatar: `img/avatar-${getRandomNumber(1, 6)}.svg`,
+  message: getRandomArrayElement(MESSAGES),
+  name: getRandomArrayElement(NAMES)
 });
 
-export const getRandomPhotosInformation = (length) => Array.from({length: length}, (_, index) => getRandomPhotoInformation(index));
+const createPhotoComments = () => Array.from(
+  {length: getRandomNumber(0, 25)},
+  (_, index) => createComment(index + 1),
+);
 
-export const data = getRandomPhotosInformation(PHOTO_INFORMATION_COUNTERS);
+const getRandomPhotoInformation = (id) => ({
+  id,
+  url: `photos/${id}.jpg`,
+  description: getRandomArrayElement(DESCRIPTIONS),
+  likes: getRandomNumber (15, 200),
+  comments: createPhotoComments(),
+});
+
+export const getRandomPhotosInformation = (length) => Array.from(
+  {length},
+  (_, index) => getRandomPhotoInformation(index + 1)
+);
+
+export const isMaxLength = (string, maxLength) => string.length <= maxLength;

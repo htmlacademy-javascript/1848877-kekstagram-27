@@ -1,4 +1,5 @@
-import { closeOverlay } from './user-form.js';
+import {closeOverlay} from './user-form.js';
+
 const bigPicture = document.querySelector('.big-picture');
 const closeButton = bigPicture.querySelector('#picture-cancel');
 const socialComments = document.querySelector('.social__comments');
@@ -11,7 +12,10 @@ const socialCommentCount = bigPicture.querySelector('.social__comment-count');
 const commentsLoader = bigPicture.querySelector('.comments-loader');
 const body = document.body;
 //const bigPictureSocial = document.querySelector('.big-picture__social');
-//сonst showComment = document.querySelector('.comments-shown');
+//const showComment = document.querySelector('.comments-shown');
+const textHastag = document.querySelector('.text__hashtags');
+const textDescription = document.querySelector('.text__description');
+const form = document.querySelector('.img-upload__form');
 
 //const MAX_NUMBER_OF_COMMENTS = 5;
 
@@ -19,9 +23,11 @@ const body = document.body;
 export const hideBigPicture = () => {
   bigPicture.classList.add('hidden'); // добавляется класс, для скрывания окна
   body.classList.remove('modal-open'); // добавл-ся класс для активации скролла
-  //document.removeEventListener('keydown', onKeyDown); //удаления обработчика закрытия по Esc
+
+  document.removeEventListener('keydown', onKeyDown); //удаления обработчика закрытия по Esc
 };
 
+//открывает большое фото
 export const openBigPicture = () => {
   socialCommentCount.classList.remove('hidden');
   commentsLoader.classList.remove('hidden');
@@ -29,13 +35,15 @@ export const openBigPicture = () => {
   body.classList.add('modal-open');
 };
 
-export const onKeyDown = (evt) => {
+//закрытие окна по Esc
+export function onKeyDown (evt) {
   if (evt.key === 'Escape') {
     evt.preventDefault();
+
     hideBigPicture();
     closeOverlay();
   }
-};
+}
 
 //закрытие по кнопке
 const onCancelButtonClick = () => {
@@ -81,9 +89,15 @@ export const loadComments = () => {
   if (!commentsArray.length) {
     commentsLoader.classList.add('hidden');
   }
-};
+};*/
+//если фокус на поле хештегов или комментария, по кнопке Esc не закрывается окно
+form.addEventListener('keydown', (evt) => {
+  if (document.activeElement === textHastag || document.activeElement === textDescription) {
+    evt.stopPropagation();
+  }
+});
 
-commentsLoader.addEventListener('click', loadComments);*/
+//commentsLoader.addEventListener('click', loadComments);
 
 //функция, закрывающая окно
 

@@ -8,8 +8,10 @@ const commentsLoader = bigPicture.querySelector('.comments-loader');
 const thumbnailPicture = document.querySelector('#picture').content.querySelector('.picture');
 const gallery = document.querySelector('.pictures');
 const imageContainer = document.querySelector('.photos-gallery');
+//const bigPictureImg = document.querySelector('.big-picture__img img');
 
 const getPhotoInformation = getRandomPhotosInformation(PHOTO_INFORMATION_COUNTERS);
+
 //создание фотографии (миниатюры)
 const createPictureElement = (data) => {
   const { url, comments, likes, id} = data;
@@ -39,6 +41,7 @@ gallery.addEventListener('click', (evt) => {
     socialCommentCount.classList.add('hidden');
     commentsLoader.classList.add('hidden');
   }
+
   openBigPicture();
   document.addEventListener('keydown', onKeyDown);
 //loadComments();

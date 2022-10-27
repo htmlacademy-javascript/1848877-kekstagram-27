@@ -109,7 +109,7 @@ imgUploadForm.addEventListener('submit', (evt) => {
     imgUploadForm.submit();
     submitButton.disabled(true);
   }
-  
+
   submitButton.disabled (false);
 });
 

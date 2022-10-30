@@ -20,26 +20,25 @@ export const pristine = new Pristine(imgUploadForm, {
 const createHashtagArray = (value) => value.split(' ');
 
 const isValidHashtag = (value) => {
-  if(!value) {
+  if (!value) {
     return true;
   }
 
   const hashtag = createHashtagArray(value);
+
+  return hashtag.every((test) => HASHTAG_RULE.test(test));
+};
+
+/*
   const isValid = (test) => HASHTAG_RULE.test(test);
 
-  const allHashtagIsValid = hashtag.every(isValid);
+  return hashtag.every(isValid);*/
 
-  if (allHashtagIsValid) {
-    return hashtag;
-  }
-};
 
 const isHashTagsLengthValid = (value) => {
   const hashtag = createHashtagArray(value);
 
-  if (hashtag.length <= MAX_HASHTAGS) {
-    return hashtag;
-  }
+  return hashtag.length <= MAX_HASHTAGS;
 };
 
 const isUniqeHashtag = (value) => {

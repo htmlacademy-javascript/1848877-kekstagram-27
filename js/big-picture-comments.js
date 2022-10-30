@@ -6,14 +6,14 @@ const showComment = document.querySelector('.comments-shown');
 const commentsCount = document.querySelector('.comments-count');
 const socialCommentsLoader = document.querySelector('.social__comments-loader');
 
-let commentsArray = [];
+let visibleComments = [];
 let displayedLength = 0;
 
 export const updateCommentState = () => {
   showComment.textContent = displayedLength;
-  commentsCount.textContent = commentsArray.length;
+  commentsCount.textContent = visibleComments.length;
 
-  if (displayedLength === commentsArray.length) {
+  if (displayedLength === visibleComments.length) {
     socialCommentsLoader.classList.add('hidden');
   } else {
     socialCommentsLoader.classList.remove('hidden');
@@ -31,7 +31,7 @@ const createComment = ({ avatar, name, message }) => {
 };
 
 const initComments = (comments) => {
-  commentsArray = comments;
+  visibleComments = comments;
 
   if (comments.length < MAX_NUMBER_OF_COMMENTS) {
     displayedLength = comments.length;
@@ -43,7 +43,7 @@ const initComments = (comments) => {
 export const renderComments = () => {
   const commentFragment = document.createDocumentFragment();
 
-  ([...commentsArray].splice(0, displayedLength)).forEach((comment) => {
+  ([...visibleComments].splice(0, displayedLength)).forEach((comment) => {
     commentFragment.appendChild(createComment(comment));
   });
 
@@ -57,11 +57,12 @@ export const renderPictureComments = ({comments}) => {
   updateCommentState();
 };
 
-socialCommentsLoader.addEventListener('click', () => {
+
+const getCommentsLoader = () => {
   const newState = displayedLength + MAX_NUMBER_OF_COMMENTS;
 
-  if (newState > commentsArray.length) {
-    displayedLength = commentsArray.length;
+  if (newState > visibleComments.length) {
+    displayedLength = visibleComments.length;
 
     socialCommentsLoader.classList.add('hidden');
   } else {
@@ -70,4 +71,6 @@ socialCommentsLoader.addEventListener('click', () => {
 
   renderComments();
   updateCommentState();
-});
+};
+
+socialCommentsLoader.addEventListener('click', getCommentsLoader);

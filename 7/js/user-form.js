@@ -1,5 +1,4 @@
 
-import {onKeyDown} from './big-picture.js';
 import {pristine, commentsField, hashtagField} from './validation.js';
 
 const uploadFile = document.querySelector('#upload-file');
@@ -8,26 +7,34 @@ const body = document.querySelector('body');
 const uploadCancel = document.querySelector('#upload-cancel');
 const imgUploadForm = document.querySelector('.img-upload__form');
 const submitButton = document.querySelector('.img-upload__submit');
-const form = document.querySelector('.img-upload__form');
 
-export const closeOverlay = () => {
-  imgUploadOverlay.classList.add('hidden');
-  body.classList.remove('modal-open');
-  imgUploadForm.reset();
-
-  document.removeEventListener('keydown', onKeyDown);
-};
-
-const openOverlay = () => {
+const showModalHandler = () => {
   imgUploadOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
-
   document.addEventListener('keydown', onKeyDown);
 };
 
-uploadFile.addEventListener('change', openOverlay);
+export const closeModalHandler = () => {
+  imgUploadOverlay.classList.add('hidden');
+  body.classList.remove('modal-open');
+  document.removeEventListener('keydown', onKeyDown);
+  imgUploadForm.reset();
+};
 
-uploadCancel.addEventListener('click', closeOverlay);
+uploadFile.addEventListener('change', showModalHandler);
+
+uploadCancel.addEventListener('click', closeModalHandler);
+
+function onKeyDown (evt) {
+  const focusHashTag = document.activeElement === hashtagField;
+  const focusComment = document.activeElement === commentsField;
+
+  if (evt.key === 'Escape' && !focusHashTag && !focusComment) {
+    evt.preventDefault();
+
+    closeModalHandler();
+  }
+}
 
 imgUploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
@@ -36,31 +43,8 @@ imgUploadForm.addEventListener('submit', (evt) => {
 
   if (isFormValid) {
     imgUploadForm.submit();
-    submitButton.disabled(true);
+    submitButton.disabled = true;
   }
 
-  submitButton.disabled(false);
+  submitButton.disabled = false;
 });
-
-//если фокус на поле хештегов или комментария, по кнопке Esc не закрывается окно
-form.addEventListener('keydown', (evt) => {
-  if (document.activeElement === hashtagField || document.activeElement === commentsField) {
-    evt.stopPropagation();
-  }
-});
-/*
-hashtagField.addEventListener('focus', (evt) => {
-  evt.stopPropagation();
-});
-
-hashtagField.addEventListener('blur', () => {
-  document.addEventListener('keydown', onKeyDown);
-});
-
-commentsField.addEventListener('focus', (evt) => {
-  evt.stopPropagation();
-});
-
-commentsField.addEventListener('blur', () => {
-  document.addEventListener('keydown', onKeyDown);
-});*/

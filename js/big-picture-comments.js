@@ -46,7 +46,7 @@ export const renderComments = () => {
   ([...commentsArray].splice(0, displayedLength)).forEach((comment) => {
     commentFragment.appendChild(createComment(comment));
   });
-  
+
   socialComments.innerHTML = '';
   socialComments.appendChild(commentFragment);
 };

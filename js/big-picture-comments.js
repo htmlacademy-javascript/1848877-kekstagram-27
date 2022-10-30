@@ -1,10 +1,10 @@
+const MAX_NUMBER_OF_COMMENTS = 5;
+
 const commentSocial = document.querySelector('.social__comment');
 const socialComments = document.querySelector('.social__comments');
 const showComment = document.querySelector('.comments-shown');
 const commentsCount = document.querySelector('.comments-count');
 const socialCommentsLoader = document.querySelector('.social__comments-loader');
-
-const MAX_NUMBER_OF_COMMENTS = 5;
 
 let commentsArray = [];
 let displayedLength = 0;
@@ -40,30 +40,34 @@ const initComments = (comments) => {
   }
 };
 
-export const rerenderComments = () => {
+export const renderComments = () => {
   const commentFragment = document.createDocumentFragment();
+
   ([...commentsArray].splice(0, displayedLength)).forEach((comment) => {
     commentFragment.appendChild(createComment(comment));
   });
+  
   socialComments.innerHTML = '';
   socialComments.appendChild(commentFragment);
 };
 
 export const renderPictureComments = ({comments}) => {
   initComments(comments);
-  rerenderComments();
+  renderComments();
   updateCommentState();
 };
 
 socialCommentsLoader.addEventListener('click', () => {
   const newState = displayedLength + MAX_NUMBER_OF_COMMENTS;
+
   if (newState > commentsArray.length) {
     displayedLength = commentsArray.length;
+
     socialCommentsLoader.classList.add('hidden');
   } else {
     displayedLength = newState;
   }
 
-  rerenderComments();
+  renderComments();
   updateCommentState();
 });

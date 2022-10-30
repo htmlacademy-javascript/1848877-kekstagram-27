@@ -1,4 +1,4 @@
-import {renderPictureDialog, onKeyDown, hideBigPicture, openBigPicture} from './big-picture.js';
+import {renderPictureDialog, onKeyDown, openBigPicture} from './big-picture.js';
 import {getRandomPhotosInformation, PHOTO_INFORMATION_COUNTERS} from './data.js';
 
 const thumbnailPicture = document.querySelector('#picture').content.querySelector('.picture');
@@ -21,17 +21,13 @@ const createPictureElement = (data) => {
 
 gallery.addEventListener('click', (evt) => {
   const element = evt.target.closest('[data-id]');
-
   const picture = element ? getPhotoInformation.find((item) => item.id === Number(element.dataset.id)) : null;
 
   if (picture) {
     renderPictureDialog(picture);
     openBigPicture();
-    document.addEventListener('keydown', onKeyDown);
-  }
 
-  if(!element) {
-    hideBigPicture();
+    document.addEventListener('keydown', onKeyDown);
   }
 });
 

@@ -1,4 +1,3 @@
-import {closeOverlay} from './user-form.js';
 import {renderPictureComments} from './big-picture-comments.js';
 
 const bigPicture = document.querySelector('.big-picture');
@@ -25,7 +24,6 @@ export function onKeyDown (evt) {
     evt.preventDefault();
 
     hideBigPicture();
-    closeOverlay();
   }
 }
 

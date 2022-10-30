@@ -17,13 +17,10 @@ export const pristine = new Pristine(imgUploadForm, {
   errorTextClass: 'error__inner'
 });
 
-//создание массива хештегов
 const createHashtagArray = (value) => value.split(' ');
 
-//проверка на валидность хештега
 const isValidHashtag = (value) => {
-  if(value === '') {
-
+  if(!value) {
     return true;
   }
 
@@ -37,7 +34,6 @@ const isValidHashtag = (value) => {
   }
 };
 
-//Проверка на условие "Не более 5 хештегов"
 const isHashTagsLengthValid = (value) => {
   const hashtag = createHashtagArray(value);
 
@@ -46,7 +42,6 @@ const isHashTagsLengthValid = (value) => {
   }
 };
 
-//один и тот же хэш-тег не может быть использован дважды
 const isUniqeHashtag = (value) => {
   const hashtag = createHashtagArray(value);
   const uniqHashtag = new Set(hashtag);
@@ -54,7 +49,6 @@ const isUniqeHashtag = (value) => {
   return uniqHashtag.size === hashtag.length;
 };
 
-//длина комментария не больше 140
 const isCommentLengthValid = (value) => isMaxLength(value, MAX_LENGTH_COMMENT);
 
 pristine.addValidator(hashtagField, isValidHashtag,'Хештег должен начинаться с "#", содержать буквы, числа (не более 20 символов, включая #)');

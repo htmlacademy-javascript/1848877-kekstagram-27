@@ -19,6 +19,7 @@ export const openBigPicture = () => {
   body.classList.add('modal-open');
 };
 
+//Функция объявлена декларативно, чтобы могла быть вызвана раньше, чем она объявлена
 export function onKeyDown (evt) {
   if (evt.key === 'Escape') {
     evt.preventDefault();

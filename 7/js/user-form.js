@@ -25,6 +25,7 @@ uploadFile.addEventListener('change', showModalHandler);
 
 uploadCancel.addEventListener('click', closeModalHandler);
 
+//Функция объявлена декларативно, чтобы могла быть вызвана раньше, чем она объявлена
 function onKeyDown (evt) {
   const focusHashTag = document.activeElement === hashtagField;
   const focusComment = document.activeElement === commentsField;

@@ -5,7 +5,7 @@ const socialComments = document.querySelector('.social__comments');
 const showComment = document.querySelector('.comments-shown');
 const commentsCount = document.querySelector('.comments-count');
 const socialCommentsLoader = document.querySelector('.social__comments-loader');
-//массив для комментариев
+
 let visibleComments = [];
 let displayedLength = 0;
 
@@ -29,7 +29,7 @@ const createComment = ({ avatar, name, message }) => {
 
   return socialComment;
 };
-//узнаем длину массива с комментариями
+
 const initComments = (comments) => {
   visibleComments = comments;
 
@@ -72,5 +72,5 @@ const getCommentsLoader = () => {
   renderComments();
   updateCommentState();
 };
-//оработчик кнопки "загрузить еще"
+
 socialCommentsLoader.addEventListener('click', getCommentsLoader);

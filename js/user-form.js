@@ -1,5 +1,7 @@
 
 import {pristine, commentsField, hashtagField} from './validation.js';
+import {getDefaultValue} from './resize-image.js';
+import {getInitializationSlider, resetSlider} from './picture-effect.js';
 
 const uploadFile = document.querySelector('#upload-file');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
@@ -12,6 +14,11 @@ const showModalHandler = () => {
   imgUploadOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onKeyDown);
+
+  getInitializationSlider();
+  resetSlider();
+
+  getDefaultValue();
 };
 
 export const closeModalHandler = () => {

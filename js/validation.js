@@ -29,12 +29,6 @@ const isValidHashtag = (value) => {
   return hashtag.every((test) => HASHTAG_RULE.test(test));
 };
 
-/*
-  const isValid = (test) => HASHTAG_RULE.test(test);
-
-  return hashtag.every(isValid);*/
-
-
 const isHashTagsLengthValid = (value) => {
   const hashtag = createHashtagArray(value);
 

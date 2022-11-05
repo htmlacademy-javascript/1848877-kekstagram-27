@@ -19,7 +19,7 @@ export const sendData = (onSuccess, onFail, body) => {
     } else {
       onFail('Не удалось отправить форму. Попробуйте ещё раз');
     }
-  }).catch((error) => {
+  }).catch(() => {
     onFail('Не удалось отправить форму. Попробуйте ещё раз');
   });
 };

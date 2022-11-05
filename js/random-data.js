@@ -1,4 +1,4 @@
-import {getRandomNumber, getRandomArrayElement} from './util.js';
+/*import {getRandomNumber, getRandomArrayElement} from './util.js';
 
 const NAMES = [
   'Kate',
@@ -73,3 +73,4 @@ export const getRandomPhotosInformation = (length) => Array.from(
   {length},
   (_, index) => getRandomPhotoInformation(index + 1)
 );
+*/

@@ -1,4 +1,4 @@
-export const getRandomNumber = (minNumber, maxNumber) => {
+/*export const getRandomNumber = (minNumber, maxNumber) => {
   let min = Math.ceil(minNumber);
   let max = Math.floor(maxNumber);
 
@@ -16,4 +16,4 @@ export const getRandomNumber = (minNumber, maxNumber) => {
 };
 
 export const getRandomArrayElement = (elements) => elements[getRandomNumber(0, elements.length - 1)];
-
+*/

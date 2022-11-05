@@ -1,4 +1,3 @@
-import './util.js';
 import './big-picture.js';
 import './validation.js';
 import './resize-image.js';

@@ -1,5 +1,4 @@
 const slider = document.querySelector('.effect-level__slider');
-const containerEffects = document.querySelector('.effects__list');
 const styles = document.querySelector('.img-upload__preview');
 const sliderContainer = document.querySelector('.img-upload__effect-level');
 const effectValue = document.querySelector('.effect-level__value');
@@ -14,10 +13,10 @@ noUiSlider.create(slider, {
   },
   start: 0,
   step: 0.1,
-  connect: 'lower',
+  connect: 'lower'
 });
 
-const gerHiddenSlider = () => {
+const sliderHandler = () => {
   if (currentEffect === 'none') {
     sliderContainer.classList.add('hidden');
   } else {
@@ -36,10 +35,20 @@ export const resetSlider = () => {
   });
 };
 
-const getEffectChange = (evt) => {
+export const resetEffect = () => {
+  currentEffect = 'none';
+
+  resetSlider();
+};
+
+const effectChangeHandler = (evt) => {
+  styles.classList.remove(`effects__preview--${currentEffect}`);
+
   currentEffect = evt.target.value;
 
-  gerHiddenSlider();
+  styles.classList.add(`effects__preview--${currentEffect}`);
+
+  sliderHandler();
 
   if (currentEffect === 'none' || currentEffect === 'chrome' || currentEffect === 'sepia') {
     resetSlider();
@@ -79,97 +88,40 @@ const getEffectChange = (evt) => {
   }
 };
 
-
-const getHasClass = (element) => {
-
-  if (element.classList.contains('effects__preview--chrome')) {
-    element.classList.remove('effects__preview--chrome');
-  }
-  if (element.classList.contains('effects__preview--sepia')) {
-    element.classList.remove('effects__preview--sepia');
-  }
-  if (element.classList.contains('effects__preview--marvin')) {
-    element.classList.remove('effects__preview--marvin');
-  }
-  if (element.classList.contains('effects__preview--phobos')) {
-    element.classList.remove('effects__preview--phobos');
-  }
-  if (element.classList.contains('effects__preview--heat')) {
-    element.classList.remove('effects__preview--heat');
-  }
-};
-
-containerEffects.addEventListener('click', (evt) => {
-  const effectNone = evt.target.closest('#effect-none');
-  const effectChrome = evt.target.closest('#effect-chrome');
-  const effectSepia = evt.target.closest('#effect-sepia');
-  const effectMarvin = evt.target.closest('#effect-marvin');
-  const effectPhobos = evt.target.closest('#effect-phobos');
-  const effectHeat = evt.target.closest('#effect-heat');
-
-  if (effectChrome) {
-    getHasClass(styles);
-    styles.classList.add('effects__preview--chrome');
-
-  }
-  if (effectSepia) {
-    getHasClass(styles);
-    styles.classList.add('effects__preview--sepia');
-
-  }
-  if (effectMarvin){
-    getHasClass(styles);
-    styles.classList.add('effects__preview--marvin');
-
-  }
-  if (effectPhobos){
-    getHasClass(styles);
-    styles.classList.add('effects__preview--phobos');
-
-  }
-  if (effectHeat){
-    getHasClass(styles);
-    styles.classList.add('effects__preview--heat');
-
-  }
-  if (effectNone){
-    getHasClass(styles);
-    styles.classList.remove();
-
-  }
-});
-
 slider.noUiSlider.on('update', () => {
   effectValue.value = slider.noUiSlider.get();
 
-  if (currentEffect === 'none') {
-    styles.style.filter = 'none';
-  }
+  switch(currentEffect) {
+    case 'none':
+      styles.style.filter = 'none';
+      break;
 
-  if (currentEffect === 'chrome') {
-    styles.style.filter = `grayscale(${effectValue.value})`;
-  }
+    case 'chrome':
+      styles.style.filter = `grayscale(${effectValue.value})`;
+      break;
 
-  if (currentEffect === 'sepia') {
-    styles.style.filter = `sepia(${effectValue.value})`;
-  }
+    case'sepia':
+      styles.style.filter = `sepia(${effectValue.value})`;
+      break;
 
-  if (currentEffect === 'marvin') {
-    styles.style.filter = `invert(${effectValue.value}%)`;
-  }
+    case'marvin':
+      styles.style.filter = `invert(${effectValue.value}%)`;
+      break;
 
-  if (currentEffect === 'phobos') {
-    styles.style.filter = `blur(${effectValue.value}px)`;
-  }
-  if (currentEffect === 'heat') {
-    styles.style.filter = `brightness(${effectValue.value})`;
+    case'phobos':
+      styles.style.filter = `blur(${effectValue.value}px)`;
+      break;
+
+    case'heat':
+      styles.style.filter = `brightness(${effectValue.value})`;
+      break;
   }
 });
 
-export const getInitializationSlider = () => {
+imgUploadEffects.addEventListener('change', effectChangeHandler);
+
+export const sliderInit = () => {
   currentEffect = 'none';
 
-  gerHiddenSlider();
+  sliderHandler();
 };
-
-imgUploadEffects.addEventListener('change', getEffectChange);

@@ -1,11 +1,13 @@
-import {renderPictureDialog, onKeyDown, openBigPicture} from './big-picture.js';
-import {getRandomPhotosInformation, PHOTO_INFORMATION_COUNTERS} from './data.js';
+import {renderPictureDialog, keyDownHandler, openBigPictureHandler} from './big-picture.js';
+import {getData} from './api.js';
+
+const NUMBER_OF_PHOTOS = 25;
 
 const thumbnailPicture = document.querySelector('#picture').content.querySelector('.picture');
 const gallery = document.querySelector('.pictures');
 const imageContainer = document.querySelector('.photos-gallery');
 
-const getPhotoInformation = getRandomPhotosInformation(PHOTO_INFORMATION_COUNTERS);
+let dataList = [];
 
 const createPictureElement = (data) => {
   const { url, comments, likes, id} = data;
@@ -21,17 +23,19 @@ const createPictureElement = (data) => {
 
 gallery.addEventListener('click', (evt) => {
   const element = evt.target.closest('[data-id]');
-  const picture = element ? getPhotoInformation.find((item) => item.id === Number(element.dataset.id)) : null;
+  const picture = element
+    ? dataList.find((item) => item.id === Number(element.dataset.id))
+    : null;
 
   if (picture) {
     renderPictureDialog(picture);
-    openBigPicture();
+    openBigPictureHandler();
 
-    document.addEventListener('keydown', onKeyDown);
+    document.addEventListener('keydown', keyDownHandler);
   }
 });
 
-const renderPhotos = (photos) => {
+export const renderPhotos = (photos) => {
   const photosFragment = document.createDocumentFragment();
 
   photos.forEach((photo) => {
@@ -42,4 +46,8 @@ const renderPhotos = (photos) => {
   imageContainer.appendChild(photosFragment);
 };
 
-renderPhotos(getPhotoInformation);
+getData ((photos) => {
+  dataList = photos;
+  renderPhotos(photos.slice(0, NUMBER_OF_PHOTOS));
+});
+

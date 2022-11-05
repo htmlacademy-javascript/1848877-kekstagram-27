@@ -1,4 +1,4 @@
-import {isMaxLength} from './data.js';
+export const isMaxLength = (string, maxLength) => string.length <= maxLength;
 
 const MAX_HASHTAGS = 5;
 const MAX_LENGTH_COMMENT = 140;
@@ -36,10 +36,10 @@ const isHashTagsLengthValid = (value) => {
 };
 
 const isUniqeHashtag = (value) => {
-  const hashtag = createHashtagArray(value);
-  const uniqHashtag = new Set(hashtag);
+  const tag = createHashtagArray(value);
+  const uniqTag = new Set(tag);
 
-  return uniqHashtag.size === hashtag.length;
+  return uniqTag.size === tag.length;
 };
 
 const isCommentLengthValid = (value) => isMaxLength(value, MAX_LENGTH_COMMENT);

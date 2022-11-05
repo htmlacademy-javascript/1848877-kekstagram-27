@@ -7,32 +7,32 @@ const bigPictureImg = document.querySelector('.big-picture__img img');
 const likesCount = document.querySelector('.likes-count');
 const body = document.body;
 
-export const hideBigPicture = () => {
+export const closeBigPictureHandler = () => {
   bigPicture.classList.add('hidden');
   body.classList.remove('modal-open');
 
-  document.removeEventListener('keydown', onKeyDown);
+  document.removeEventListener('keydown', keyDownHandler);
 };
 
-export const openBigPicture = () => {
+export const openBigPictureHandler = () => {
   bigPicture.classList.remove('hidden');
   body.classList.add('modal-open');
 };
 
 //Функция объявлена декларативно, чтобы могла быть вызвана раньше, чем она объявлена
-export function onKeyDown (evt) {
+export function keyDownHandler (evt) {
   if (evt.key === 'Escape') {
     evt.preventDefault();
 
-    hideBigPicture();
+    closeBigPictureHandler();
   }
 }
 
-const onCancelButtonClick = () => {
-  hideBigPicture();
+const cancelButtonHandler = () => {
+  closeBigPictureHandler();
 };
 
-closeButton.addEventListener('click', onCancelButtonClick);
+closeButton.addEventListener('click', cancelButtonHandler);
 
 export const renderPictureDialog = (picture) => {
   const { url, comments, likes, description } = picture;

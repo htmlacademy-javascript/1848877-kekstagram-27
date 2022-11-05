@@ -2,11 +2,9 @@ const SCALE_STEP = 25;
 const SCALE_MIN = 25;
 const SCALE_MAX = 100;
 
-
-const scaleSmall = document.querySelector('.scale__control--smaller');
-const scaleBig = document.querySelector('.scale__control--bigger');
 const controlValue = document.querySelector('.scale__control--value');
-const imgUploadPreview = document.querySelector('.img-upload__preview');
+const imgUploadPreview = document.querySelector('.img-upload__preview img');
+const scaleContainer = document.querySelector('.img-upload__scale');
 
 let scale;
 
@@ -15,7 +13,7 @@ const scalePreview = () => {
   imgUploadPreview.style.transform = `scale(${scale / 100})`;
 };
 
-export const getDefaultValue = () => {
+export const setDefaultValue = () => {
   scale = SCALE_MAX;
 
   scalePreview();
@@ -37,6 +35,13 @@ const zoomDown = () => {
   scalePreview();
 };
 
-scaleSmall.addEventListener('click', zoomDown);
-scaleBig.addEventListener('click', zoomIn);
-
+scaleContainer.addEventListener('click', (evt) => {
+  const decreaseScale = evt.target.closest('.scale__control--smaller');
+  const increaseScale = evt.target.closest('.scale__control--bigger');
+  if (decreaseScale){
+    zoomDown();
+  }
+  if (increaseScale) {
+    zoomIn();
+  }
+});

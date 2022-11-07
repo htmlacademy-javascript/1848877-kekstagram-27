@@ -2,19 +2,15 @@ const errorTemplate = document.querySelector('#error').content.querySelector('.e
 const successTemplate = document.querySelector('#success').content.querySelector('.success');
 const successFragment = document.createDocumentFragment();
 const errorFragment = document.createDocumentFragment();
-const body = document.body;
 
 export const showErrorMessage = () => {
   const errorMessage = errorTemplate.cloneNode(true);
   errorFragment.appendChild(errorMessage);
-  body.appendChild(errorFragment);
+  document.body.appendChild(errorFragment);
   const sectionError = document.querySelector('.error');
 
   sectionError.addEventListener(('click'), (evt) => {
-    if (evt.target.closest('.error__button')) {
-      sectionError.remove();
-    }
-    if (evt.target.closest('.error')) {
+    if (evt.target.closest('.error__button') || evt.target.closest('.error')) {
       sectionError.remove();
     }
   });
@@ -30,14 +26,11 @@ export const showErrorMessage = () => {
 export const showSuccessMessage = () => {
   const successMessage = successTemplate.cloneNode(true);
   successFragment.appendChild(successMessage);
-  body.appendChild(successFragment);
+  document.body.appendChild(successFragment);
   const sectionSuccess = document.querySelector('.success');
 
   sectionSuccess.addEventListener(('click'), (evt) => {
-    if (evt.target.closest('.success__button')) {
-      sectionSuccess.remove();
-    }
-    if (evt.target.closest('.success')) {
+    if (evt.target.closest('.success__button') || evt.target.closest('.success')) {
       sectionSuccess.remove();
     }
   });

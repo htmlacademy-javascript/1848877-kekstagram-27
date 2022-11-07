@@ -3,60 +3,70 @@ import {setDefaultValue} from './resize-image.js';
 import {sliderInit, resetSlider, resetEffect} from './picture-effect.js';
 import {sendData} from './api.js';
 import {showErrorMessage, showSuccessMessage} from './message-upload.js';
+import {uploadFiles} from './upload-file.js';
+
+const ALERT_SHOW_TIME = 5000;
 
 const uploadFile = document.querySelector('#upload-file');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
-const body = document.querySelector('body');
 const uploadCancel = document.querySelector('#upload-cancel');
 const imgUploadForm = document.querySelector('.img-upload__form');
 const submitButton = document.querySelector('.img-upload__submit');
 
-const showModalHandler = () => {
+const showUploadPopup = () => {
   imgUploadOverlay.classList.remove('hidden');
-  body.classList.add('modal-open');
-  document.addEventListener('keydown', KeyDownHandler);
+  document.body.classList.add('modal-open');
+  document.addEventListener('keydown', keyDownHandler);
 
   sliderInit();
   resetSlider();
 
   setDefaultValue();
+  uploadFiles();
 };
 
-export const closeModalHandler = () => {
+export const closeUploadPopup = () => {
   imgUploadOverlay.classList.add('hidden');
-  body.classList.remove('modal-open');
+  document.body.classList.remove('modal-open');
 
-  document.removeEventListener('keydown', KeyDownHandler);
-
+  document.removeEventListener('keydown', keyDownHandler);
   imgUploadForm.reset();
-
   resetEffect();
 };
 
-uploadFile.addEventListener('change', showModalHandler);
+uploadFile.addEventListener('change', showUploadPopup);
 
-uploadCancel.addEventListener('click', closeModalHandler);
+uploadCancel.addEventListener('click', closeUploadPopup);
 
 //Функция объявлена декларативно, чтобы могла быть вызвана раньше, чем она объявлена
-function KeyDownHandler (evt) {
+function keyDownHandler (evt) {
   const focusHashTag = document.activeElement === hashtagField;
   const focusComment = document.activeElement === commentsField;
 
   if (evt.key === 'Escape' && !focusHashTag && !focusComment) {
     evt.preventDefault();
-
-    closeModalHandler();
+    closeUploadPopup();
   }
 }
 
-const blockSubmitButton = () => {
+const disableSubmitButton = () => {
   submitButton.disabled = true;
   submitButton.textContent = 'Публикую...';
 };
 
-const unBlockSubmitButton = () => {
+const enableSubmitButton = () => {
   submitButton.disabled = false;
   submitButton.textContent = 'Опубликовать';
+};
+
+const showSatisfactoryMessage = () => {
+  enableSubmitButton();
+  showSuccessMessage();
+};
+
+const showUnsatisfactoryMessage = () => {
+  showErrorMessage();
+  enableSubmitButton();
 };
 
 export const setUserFormSubmit = (onSuccess) => {
@@ -66,19 +76,40 @@ export const setUserFormSubmit = (onSuccess) => {
     const isFormValid = pristine.validate();
 
     if (isFormValid) {
-      blockSubmitButton();
+      disableSubmitButton();
       sendData(
         () => {
           onSuccess();
-          unBlockSubmitButton();
-          showSuccessMessage();
+          showSatisfactoryMessage();
         },
         () => {
-          showErrorMessage();
-          unBlockSubmitButton();
+          showUnsatisfactoryMessage();
         },
         new FormData(evt.target)
       );
     }
   });
 };
+
+export const showAlertMessage = (message) => {
+  const alertContainer = document.createElement('div');
+  alertContainer.style.zIndex = 100;
+  alertContainer.style.position = 'absolute';
+  alertContainer.style.left = 0;
+  alertContainer.style.top = 0;
+  alertContainer.style.right = 0;
+  alertContainer.style.padding = '10px 3px';
+  alertContainer.style.fontSize = '30px';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.backgroundColor = 'red';
+
+  alertContainer.textContent = message;
+
+  document.body.append(alertContainer);
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, ALERT_SHOW_TIME);
+};
+
+setUserFormSubmit(closeUploadPopup);

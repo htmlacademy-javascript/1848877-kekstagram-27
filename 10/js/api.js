@@ -1,14 +1,24 @@
+import {showAlertMessage} from './user-form.js';
+
+const DATA_INCOMING_SERVER = 'https://27.javascript.pages.academy/kekstagram/data';
+const ERROR_MESSAGE_INCOMING_SRVER = 'Не удалось загрузить данные с сервера';
+const ERROR_MESSAGE_FORM = 'Не удалось отправить форму. Попробуйте ещё раз';
+const DATA_SEND_SERVER = 'https://27.javascript.pages.academy/kekstagram';
+
 export const getData = (onSuccess) => {
-  fetch('https://27.javascript.pages.academy/kekstagram/data')
+  fetch(DATA_INCOMING_SERVER)
     .then((response) => response.json())
     .then((photo) => {
       onSuccess(photo);
+    })
+    .catch(() => {
+      showAlertMessage(ERROR_MESSAGE_INCOMING_SRVER);
     });
 };
 
 export const sendData = (onSuccess, onFail, body) => {
   fetch(
-    'https://27.javascript.pages.academy/kekstagram',
+    DATA_SEND_SERVER,
     {
       method: 'POST',
       body,
@@ -17,10 +27,10 @@ export const sendData = (onSuccess, onFail, body) => {
     if (response.ok) {
       onSuccess();
     } else {
-      onFail('Не удалось отправить форму. Попробуйте ещё раз');
+      onFail(ERROR_MESSAGE_FORM);
     }
   }).catch(() => {
-    onFail('Не удалось отправить форму. Попробуйте ещё раз');
+    onFail(ERROR_MESSAGE_FORM);
   });
 };
 

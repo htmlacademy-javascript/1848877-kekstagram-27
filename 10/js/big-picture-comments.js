@@ -58,7 +58,7 @@ export const renderPictureComments = ({comments}) => {
 };
 
 
-const getCommentsLoader = () => {
+const showComments = () => {
   const newState = displayedLength + MAX_NUMBER_OF_COMMENT;
 
   if (newState > visibleComments.length) {
@@ -73,4 +73,4 @@ const getCommentsLoader = () => {
   updateCommentState();
 };
 
-socialCommentsLoader.addEventListener('click', getCommentsLoader);
+socialCommentsLoader.addEventListener('click', showComments);

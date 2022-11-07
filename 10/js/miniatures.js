@@ -1,5 +1,6 @@
-import {renderPictureDialog, keyDownHandler, openBigPictureHandler} from './big-picture.js';
+import {renderPictureDialog, keyDownHandler, openBigPicture} from './big-picture.js';
 import {getData} from './api.js';
+import {showFiltersContainer} from './filters.js';
 
 const NUMBER_OF_PHOTOS = 25;
 
@@ -29,7 +30,7 @@ gallery.addEventListener('click', (evt) => {
 
   if (picture) {
     renderPictureDialog(picture);
-    openBigPictureHandler();
+    openBigPicture();
 
     document.addEventListener('keydown', keyDownHandler);
   }
@@ -48,6 +49,7 @@ export const renderPhotos = (photos) => {
 
 getData ((photos) => {
   dataList = photos;
-  renderPhotos(photos.slice(0, NUMBER_OF_PHOTOS));
+  renderPhotos(dataList.slice(0, NUMBER_OF_PHOTOS));
+  showFiltersContainer(dataList);
 });
 

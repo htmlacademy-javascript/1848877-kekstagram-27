@@ -1,5 +1,5 @@
 const slider = document.querySelector('.effect-level__slider');
-const styles = document.querySelector('.img-upload__preview');
+const imgUploadPreview = document.querySelector('.img-upload__preview');
 const sliderContainer = document.querySelector('.img-upload__effect-level');
 const effectValue = document.querySelector('.effect-level__value');
 const imgUploadEffects = document.querySelector('.img-upload__effects');
@@ -16,7 +16,7 @@ noUiSlider.create(slider, {
   connect: 'lower'
 });
 
-const sliderHandler = () => {
+const hideSlider = () => {
   if (currentEffect === 'none') {
     sliderContainer.classList.add('hidden');
   } else {
@@ -41,50 +41,53 @@ export const resetEffect = () => {
   resetSlider();
 };
 
-const effectChangeHandler = (evt) => {
-  styles.classList.remove(`effects__preview--${currentEffect}`);
+const changeEffectImage = (evt) => {
+  imgUploadPreview.classList.remove(`effects__preview--${currentEffect}`);
 
   currentEffect = evt.target.value;
 
-  styles.classList.add(`effects__preview--${currentEffect}`);
+  imgUploadPreview.classList.add(`effects__preview--${currentEffect}`);
 
-  sliderHandler();
+  hideSlider();
+  switch (currentEffect) {
+    case 'none':
+    case'chrome':
+    case 'sepia':
+      resetSlider();
+      break;
 
-  if (currentEffect === 'none' || currentEffect === 'chrome' || currentEffect === 'sepia') {
-    resetSlider();
-  }
+    case 'marvin':
+      slider.noUiSlider.updateOptions({
+        range: {
+          min: 0,
+          max: 100,
+        },
+        start: 100,
+        step: 1,
+      });
+      break;
 
-  if (currentEffect === 'marvin') {
-    slider.noUiSlider.updateOptions({
-      range: {
-        min: 0,
-        max: 100,
-      },
-      start: 100,
-      step: 1,
-    });
-  }
+    case 'phobos':
+      slider.noUiSlider.updateOptions({
+        range: {
+          min: 0,
+          max: 3,
+        },
+        start: 3,
+        step: 0.1,
+      });
+      break;
 
-  if (currentEffect === 'phobos') {
-    slider.noUiSlider.updateOptions({
-      range: {
-        min: 0,
-        max: 3,
-      },
-      start: 3,
-      step: 0.1,
-    });
-  }
-
-  if (currentEffect === 'heat') {
-    slider.noUiSlider.updateOptions({
-      range: {
-        min: 1,
-        max: 3,
-      },
-      start: 3,
-      step: 0.1,
-    });
+    case 'heat':
+      slider.noUiSlider.updateOptions({
+        range: {
+          min: 1,
+          max: 3,
+        },
+        start: 3,
+        step: 0.1,
+      });
+      break;
   }
 };
 
@@ -93,35 +96,35 @@ slider.noUiSlider.on('update', () => {
 
   switch(currentEffect) {
     case 'none':
-      styles.style.filter = 'none';
+      imgUploadPreview.style.filter = 'none';
       break;
 
     case 'chrome':
-      styles.style.filter = `grayscale(${effectValue.value})`;
+      imgUploadPreview.style.filter = `grayscale(${effectValue.value})`;
       break;
 
     case'sepia':
-      styles.style.filter = `sepia(${effectValue.value})`;
+      imgUploadPreview.style.filter = `sepia(${effectValue.value})`;
       break;
 
     case'marvin':
-      styles.style.filter = `invert(${effectValue.value}%)`;
+      imgUploadPreview.style.filter = `invert(${effectValue.value}%)`;
       break;
 
     case'phobos':
-      styles.style.filter = `blur(${effectValue.value}px)`;
+      imgUploadPreview.style.filter = `blur(${effectValue.value}px)`;
       break;
 
     case'heat':
-      styles.style.filter = `brightness(${effectValue.value})`;
+      imgUploadPreview.style.filter = `brightness(${effectValue.value})`;
       break;
   }
 });
 
-imgUploadEffects.addEventListener('change', effectChangeHandler);
+imgUploadEffects.addEventListener('change', changeEffectImage);
 
 export const sliderInit = () => {
   currentEffect = 'none';
 
-  sliderHandler();
+  hideSlider();
 };

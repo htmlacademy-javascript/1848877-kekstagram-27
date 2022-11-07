@@ -31,13 +31,9 @@ const createComment = ({ avatar, name, message }) => {
 };
 
 const initComments = (comments) => {
-  visibleComments = comments;
+  displayedLength = comments.length < MAX_NUMBER_OF_COMMENT ? comments.length
+    : MAX_NUMBER_OF_COMMENT ;
 
-  if (comments.length < MAX_NUMBER_OF_COMMENT) {
-    displayedLength = comments.length;
-  } else {
-    displayedLength = MAX_NUMBER_OF_COMMENT;
-  }
 };
 
 export const renderComments = () => {
@@ -52,6 +48,8 @@ export const renderComments = () => {
 };
 
 export const renderPictureComments = ({comments}) => {
+  visibleComments = comments;
+
   initComments(comments);
   renderComments();
   updateCommentState();

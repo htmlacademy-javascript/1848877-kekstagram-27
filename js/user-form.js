@@ -1,4 +1,4 @@
-import {pristine, commentsField, hashtagField} from './validation.js';
+import {pristine, commentsField, hashtagField, resetFormValidation} from './validation.js';
 import {setDefaultValue} from './resize-image.js';
 import {sliderInit, resetSlider, resetEffect} from './picture-effect.js';
 import {sendData} from './api.js';
@@ -16,7 +16,7 @@ const submitButton = document.querySelector('.img-upload__submit');
 const showUploadPopup = () => {
   imgUploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
-  document.addEventListener('keydown', keyDownHandler);
+  document.addEventListener('keydown', keyDownHandler);  
 
   sliderInit();
   resetSlider();
@@ -32,6 +32,7 @@ export const closeUploadPopup = () => {
   document.removeEventListener('keydown', keyDownHandler);
   imgUploadForm.reset();
   resetEffect();
+  resetFormValidation();
 };
 
 uploadFile.addEventListener('change', showUploadPopup);
@@ -39,7 +40,7 @@ uploadFile.addEventListener('change', showUploadPopup);
 uploadCancel.addEventListener('click', closeUploadPopup);
 
 //Функция объявлена декларативно, чтобы могла быть вызвана раньше, чем она объявлена
-function keyDownHandler (evt) {
+export function keyDownHandler (evt) {
   const focusHashTag = document.activeElement === hashtagField;
   const focusComment = document.activeElement === commentsField;
 

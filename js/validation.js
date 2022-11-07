@@ -48,3 +48,7 @@ pristine.addValidator(hashtagField, isValidHashtag,'Хештег должен н
 pristine.addValidator(hashtagField, isHashTagsLengthValid,`нельзя указать больше ${MAX_HASHTAG} хэш-тегов`);
 pristine.addValidator(hashtagField, isUniqeHashtag,'один и тот же хэш-тег не может быть использован дважды');
 pristine.addValidator(commentsField, isCommentLengthValid, `Не более ${MAX_LENGTH_COMMENT} символов`);
+
+export const resetFormValidation = () => {
+  pristine.reset();
+};

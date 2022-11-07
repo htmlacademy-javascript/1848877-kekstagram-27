@@ -16,7 +16,7 @@ const submitButton = document.querySelector('.img-upload__submit');
 const showUploadPopup = () => {
   imgUploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
-  document.addEventListener('keydown', keyDownHandler);  
+  document.addEventListener('keydown', keyDownHandler);
 
   sliderInit();
   resetSlider();

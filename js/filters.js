@@ -1,5 +1,6 @@
 import {debounce, getRandomUniqeElement} from './util.js';
 import {renderPhotos} from './miniatures.js';
+import {dataList} from './data.js';
 
 const QUANTITY_PICTURE_RANDOM = 10;
 
@@ -10,15 +11,8 @@ const filterDescussed = document.querySelector('#filter-discussed');
 const imageFilters = document.querySelector('.img-filters');
 
 let activeFilter = filterDefault;
-let photoFromServer;
 
-const clearActiveClass = () => {
-  activeFilter.classList.remove('img-filters__button--active');
-};
-
-export const getPhotosFromServer = (photos) => {
-  photoFromServer = [...photos];
-
+export const displayFilters = () => {
   filters.classList.remove('img-filters--inactive');
 };
 
@@ -30,12 +24,12 @@ const filterByRandom = (pictures) => {
   return getRandomUniqeElement(pictureArrayCopy).slice(0, QUANTITY_PICTURE_RANDOM);
 };
 
-const compareCommentsNumber = (pictureA, pictureB) => pictureB.comments.length - pictureA.comments.length;
-
-const filterByDiscuss = (pictures) => [...pictures].sort(compareCommentsNumber);
+const filterByDiscuss = (pictures) => [...pictures].sort(
+  (pictureA, pictureB) => pictureB.comments.length - pictureA.comments.length
+);
 
 imageFilters.addEventListener('click', debounce ((evt) => {
-  clearActiveClass();
+  activeFilter.classList.remove('img-filters__button--active');
 
   const filter = evt.target.id;
   activeFilter = evt.target;
@@ -43,15 +37,15 @@ imageFilters.addEventListener('click', debounce ((evt) => {
   switch (filter) {
     case 'filter-default':
       filterDefault.classList.add('img-filters__button--active');
-      renderPhotos(filterByDefault(photoFromServer));
+      renderPhotos(filterByDefault([...dataList]));
       break;
     case 'filter-random':
       filterRandom.classList.add('img-filters__button--active');
-      renderPhotos(filterByRandom(photoFromServer));
+      renderPhotos(filterByRandom([...dataList]));
       break;
     case 'filter-discussed':
       filterDescussed.classList.add('img-filters__button--active');
-      renderPhotos(filterByDiscuss(photoFromServer));
+      renderPhotos(filterByDiscuss([...dataList]));
       break;
   }
 }));

@@ -8,7 +8,7 @@ export const uploadFiles = () => {
   const fileName = file.name.toLowerCase();
 
   const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
-  
+
   if (matches) {
     imgPreview.src = URL.createObjectURL(file);
   }

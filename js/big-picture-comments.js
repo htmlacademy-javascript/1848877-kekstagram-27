@@ -1,4 +1,4 @@
-const MAX_NUMBER_OF_COMMENTS = 5;
+const MAX_NUMBER_OF_COMMENT = 5;
 
 const commentSocial = document.querySelector('.social__comment');
 const socialComments = document.querySelector('.social__comments');
@@ -31,13 +31,9 @@ const createComment = ({ avatar, name, message }) => {
 };
 
 const initComments = (comments) => {
-  visibleComments = comments;
+  displayedLength = comments.length < MAX_NUMBER_OF_COMMENT ? comments.length
+    : MAX_NUMBER_OF_COMMENT;
 
-  if (comments.length < MAX_NUMBER_OF_COMMENTS) {
-    displayedLength = comments.length;
-  } else {
-    displayedLength = MAX_NUMBER_OF_COMMENTS;
-  }
 };
 
 export const renderComments = () => {
@@ -52,14 +48,16 @@ export const renderComments = () => {
 };
 
 export const renderPictureComments = ({comments}) => {
+  visibleComments = comments;
+
   initComments(comments);
   renderComments();
   updateCommentState();
 };
 
 
-const getCommentsLoader = () => {
-  const newState = displayedLength + MAX_NUMBER_OF_COMMENTS;
+const showCommentsLoader = () => {
+  const newState = displayedLength + MAX_NUMBER_OF_COMMENT;
 
   if (newState > visibleComments.length) {
     displayedLength = visibleComments.length;
@@ -73,4 +71,4 @@ const getCommentsLoader = () => {
   updateCommentState();
 };
 
-socialCommentsLoader.addEventListener('click', getCommentsLoader);
+socialCommentsLoader.addEventListener('click', showCommentsLoader);

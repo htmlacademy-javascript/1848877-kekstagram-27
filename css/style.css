@@ -1412,3 +1412,15 @@ main {
 .photos-gallery {
   display: contents;
 }
+
+.error-message {
+  z-index: 100;
+  position: absolute;
+  right: 0;
+  top: 0;
+  left: 0;
+  background-color : red;
+  text-align: center;
+  font-size: 30px;
+  padding: 10px 3px;
+ }

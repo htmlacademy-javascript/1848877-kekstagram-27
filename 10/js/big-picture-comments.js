@@ -32,7 +32,7 @@ const createComment = ({ avatar, name, message }) => {
 
 const initComments = (comments) => {
   displayedLength = comments.length < MAX_NUMBER_OF_COMMENT ? comments.length
-    : MAX_NUMBER_OF_COMMENT ;
+    : MAX_NUMBER_OF_COMMENT;
 
 };
 
@@ -56,7 +56,7 @@ export const renderPictureComments = ({comments}) => {
 };
 
 
-const showComments = () => {
+const showCommentsLoader = () => {
   const newState = displayedLength + MAX_NUMBER_OF_COMMENT;
 
   if (newState > visibleComments.length) {
@@ -71,4 +71,4 @@ const showComments = () => {
   updateCommentState();
 };
 
-socialCommentsLoader.addEventListener('click', showComments);
+socialCommentsLoader.addEventListener('click', showCommentsLoader);

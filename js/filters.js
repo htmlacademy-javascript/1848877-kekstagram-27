@@ -9,27 +9,22 @@ const filterRandom = document.querySelector('#filter-random');
 const filterDescussed = document.querySelector('#filter-discussed');
 const imageFilters = document.querySelector('.img-filters');
 
+let activeFilter = filterDefault;
+let photoFromServer;
+
 const clearActiveClass = () => {
-  const activeFilter = document.querySelector('.img-filters__button--active');
   activeFilter.classList.remove('img-filters__button--active');
 };
 
-const clearPhotoContainer = () => {
-  const pictures = document.querySelectorAll('.picture');
+export const getPhotosFromServer = (photos) => {
+  photoFromServer = [...photos];
 
-  pictures.forEach((picture) => {
-    picture.remove();
-  });
+  filters.classList.remove('img-filters--inactive');
 };
 
-const createPicturesFilter = (pictures) => {
-  clearPhotoContainer();
-  renderPhotos(pictures);
-};
+const filterByDefault = (pictures) => pictures;
 
-const createDefaultPicture = (pictures) => [...pictures];
-
-const createRandomPicture = (pictures) => {
+const filterByRandom = (pictures) => {
   const pictureArrayCopy = [...pictures];
 
   return getRandomUniqeElement(pictureArrayCopy).slice(0, QUANTITY_PICTURE_RANDOM);
@@ -37,30 +32,27 @@ const createRandomPicture = (pictures) => {
 
 const compareCommentsNumber = (pictureA, pictureB) => pictureB.comments.length - pictureA.comments.length;
 
-const createDiscussFilter = (picture) => [...picture].sort(compareCommentsNumber);
+const filterByDiscuss = (pictures) => [...pictures].sort(compareCommentsNumber);
 
-export const showFiltersContainer = (data) => {
-  filters.classList.remove('img-filters--inactive');
+imageFilters.addEventListener('click', debounce ((evt) => {
+  clearActiveClass();
 
-  imageFilters.addEventListener('click', debounce ((evt) => {
-    clearActiveClass();
+  const filter = evt.target.id;
+  activeFilter = evt.target;
 
-    const filter = evt.target.id;
-
-    switch (filter) {
-      case 'filter-default':
-        filterDefault.classList.add('img-filters__button--active');
-        createPicturesFilter(createDefaultPicture([...data]));
-        break;
-      case 'filter-random':
-        filterRandom.classList.add('img-filters__button--active');
-        createPicturesFilter(createRandomPicture([...data]));
-        break;
-      case 'filter-discussed':
-        filterDescussed.classList.add('img-filters__button--active');
-        createPicturesFilter(createDiscussFilter([...data]));
-        break;
-    }
-  })
-  );};
+  switch (filter) {
+    case 'filter-default':
+      filterDefault.classList.add('img-filters__button--active');
+      renderPhotos(filterByDefault(photoFromServer));
+      break;
+    case 'filter-random':
+      filterRandom.classList.add('img-filters__button--active');
+      renderPhotos(filterByRandom(photoFromServer));
+      break;
+    case 'filter-discussed':
+      filterDescussed.classList.add('img-filters__button--active');
+      renderPhotos(filterByDiscuss(photoFromServer));
+      break;
+  }
+}));
 

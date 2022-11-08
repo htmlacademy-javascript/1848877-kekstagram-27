@@ -41,7 +41,7 @@ export const resetEffect = () => {
   resetSlider();
 };
 
-const changeEffectImage = (evt) => {
+const changeEffectImageHandler = (evt) => {
   imgUploadPreview.classList.remove(`effects__preview--${currentEffect}`);
 
   currentEffect = evt.target.value;
@@ -49,6 +49,7 @@ const changeEffectImage = (evt) => {
   imgUploadPreview.classList.add(`effects__preview--${currentEffect}`);
 
   hideSlider();
+
   switch (currentEffect) {
     case 'none':
     case'chrome':
@@ -121,9 +122,9 @@ slider.noUiSlider.on('update', () => {
   }
 });
 
-imgUploadEffects.addEventListener('change', changeEffectImage);
+imgUploadEffects.addEventListener('change', changeEffectImageHandler);
 
-export const sliderInit = () => {
+export const resetSliderInit = () => {
   currentEffect = 'none';
 
   hideSlider();

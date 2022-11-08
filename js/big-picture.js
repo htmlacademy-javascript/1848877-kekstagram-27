@@ -19,7 +19,7 @@ export const openBigPicture = () => {
 };
 
 //Функция объявлена декларативно, чтобы могла быть вызвана раньше, чем она объявлена
-export function keyDownHandler (evt) {
+export function keyDownHandler(evt) {
   if (evt.key === 'Escape') {
     evt.preventDefault();
 
@@ -27,11 +27,11 @@ export function keyDownHandler (evt) {
   }
 }
 
-const cancelButton = () => {
+const cancelButtonHandler = () => {
   closeBigPicture();
 };
 
-closeButton.addEventListener('click', cancelButton);
+closeButton.addEventListener('click', cancelButtonHandler);
 
 export const renderPictureDialog = (picture) => {
   const { url, comments, likes, description } = picture;

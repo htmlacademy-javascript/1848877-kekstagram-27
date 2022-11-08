@@ -1,6 +1,6 @@
 import {pristine, commentsField, hashtagField, resetFormValidation} from './validation.js';
 import {setDefaultValue} from './resize-image.js';
-import {sliderInit, resetSlider, resetEffect} from './picture-effect.js';
+import {resetSliderInit, resetSlider, resetEffect} from './picture-effect.js';
 import {sendData} from './api.js';
 import {showErrorMessage, showSuccessMessage} from './message-upload.js';
 import {uploadFiles} from './upload-file.js';
@@ -18,7 +18,7 @@ const showUploadPopup = () => {
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', keyDownHandler);
 
-  sliderInit();
+  resetSliderInit();
   resetSlider();
 
   setDefaultValue();
@@ -40,7 +40,7 @@ uploadFile.addEventListener('change', showUploadPopup);
 uploadCancel.addEventListener('click', closeUploadPopup);
 
 //Функция объявлена декларативно, чтобы могла быть вызвана раньше, чем она объявлена
-export function keyDownHandler (evt) {
+function keyDownHandler (evt) {
   const focusHashTag = document.activeElement === hashtagField;
   const focusComment = document.activeElement === commentsField;
 
@@ -60,52 +60,36 @@ const enableSubmitButton = () => {
   submitButton.textContent = 'Опубликовать';
 };
 
-const showSatisfactoryMessage = () => {
+const onSuccess = () => {
   enableSubmitButton();
   showSuccessMessage();
+  closeUploadPopup();
 };
 
-const showUnsatisfactoryMessage = () => {
+const onError = () => {
   showErrorMessage();
   enableSubmitButton();
 };
 
-export const setUserFormSubmit = (onSuccess) => {
-  imgUploadForm.addEventListener('submit', (evt) => {
-    evt.preventDefault();
+imgUploadForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
 
-    const isFormValid = pristine.validate();
+  const isFormValid = pristine.validate();
 
-    if (isFormValid) {
-      disableSubmitButton();
-      sendData(
-        () => {
-          onSuccess();
-          showSatisfactoryMessage();
-        },
-        () => {
-          showUnsatisfactoryMessage();
-        },
-        new FormData(evt.target)
-      );
-    }
-  });
-};
+  if (isFormValid) {
+    disableSubmitButton();
+    sendData(
+      onSuccess,
+      onError,
+      new FormData(evt.target)
+    );
+  }
+});
 
 export const showAlertMessage = (message) => {
   const alertContainer = document.createElement('div');
-  alertContainer.style.zIndex = 100;
-  alertContainer.style.position = 'absolute';
-  alertContainer.style.left = 0;
-  alertContainer.style.top = 0;
-  alertContainer.style.right = 0;
-  alertContainer.style.padding = '10px 3px';
-  alertContainer.style.fontSize = '30px';
-  alertContainer.style.textAlign = 'center';
-  alertContainer.style.backgroundColor = 'red';
-
+  alertContainer.classList.add('error-message');
   alertContainer.textContent = message;
-
   document.body.append(alertContainer);
 
   setTimeout(() => {
@@ -113,4 +97,3 @@ export const showAlertMessage = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-setUserFormSubmit(closeUploadPopup);

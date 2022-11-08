@@ -1,6 +1,7 @@
 import {renderPictureDialog, keyDownHandler, openBigPicture} from './big-picture.js';
 import {getData} from './api.js';
-import {showFiltersContainer} from './filters.js';
+import {getPhotosFromServer} from './filters.js';
+import {showAlertMessage} from './user-form.js';
 
 const NUMBER_OF_PHOTOS = 25;
 
@@ -47,9 +48,13 @@ export const renderPhotos = (photos) => {
   imageContainer.appendChild(photosFragment);
 };
 
-getData ((photos) => {
-  dataList = photos;
-  renderPhotos(dataList.slice(0, NUMBER_OF_PHOTOS));
-  showFiltersContainer(dataList);
-});
+getData (
+  (photos) => {
+    dataList = photos.slice(0, NUMBER_OF_PHOTOS);
+    renderPhotos(dataList);
+    getPhotosFromServer(dataList);
+  },
+  () => {
+    showAlertMessage('Не удалось загрузить данные с сервера');
+  });
 

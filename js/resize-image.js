@@ -10,28 +10,28 @@ const increaseScale = document.querySelector('.scale__control--bigger');
 
 let scale;
 
-const scalePreview = () => {
-  controlValue.value = `${scale}%`;
-  imgUploadPreview.style.transform = `scale(${scale / 100})`;
+const scalePreview = (measure) => {
+  controlValue.value = `${measure}%`;
+  imgUploadPreview.style.transform = `scale(${measure / 100})`;
 };
 
 export const setDefaultValue = () => {
   scale = SCALE_MAX;
-  scalePreview();
+  scalePreview(scale);
 };
 
 const zoomIn = () => {
   if (scale < SCALE_MAX) {
     scale += SCALE_STEP;
   }
-  scalePreview();
+  scalePreview(scale);
 };
 
 const zoomDown = () => {
   if (scale > SCALE_MIN) {
     scale -= SCALE_STEP;
   }
-  scalePreview();
+  scalePreview(scale);
 };
 
 scaleContainer.addEventListener('click', (evt) => {

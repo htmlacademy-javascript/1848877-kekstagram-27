@@ -3,9 +3,6 @@ const successTemplate = document.querySelector('#success').content.querySelector
 const successFragment = document.createDocumentFragment();
 const errorFragment = document.createDocumentFragment();
 
-let keyDownErrorListener;
-let keyDownSuccessListener;
-
 export const showErrorMessage = () => {
   const errorMessage = errorTemplate.cloneNode(true);
   errorFragment.appendChild(errorMessage);
@@ -13,23 +10,22 @@ export const showErrorMessage = () => {
 
   const sectionError = document.querySelector('.error');
 
-  sectionError.addEventListener(('click'), (evt) => {
-    if (evt.target.closest('.error__button') || evt.target.closest('.error')) {
-      sectionError.remove();
-      document.removeEventListener('keydown', keyDownErrorListener);
-    }
-  });
-
   const keyDownEscHandler = (evt) => {
     if (evt.key === 'Escape') {
       evt.preventDefault();
       sectionError.remove();
+      document.removeEventListener('keydown', keyDownEscHandler);
     }
   };
 
-  keyDownErrorListener = keyDownEscHandler;
+  sectionError.addEventListener(('click'), (evt) => {
+    if (evt.target.closest('.error__button') || evt.target.closest('.error')) {
+      sectionError.remove();
+      document.removeEventListener('keydown', keyDownEscHandler);
+    }
+  });
 
-  document.addEventListener('keydown', keyDownErrorListener);
+  document.addEventListener('keydown', keyDownEscHandler);
 };
 
 
@@ -40,23 +36,22 @@ export const showSuccessMessage = () => {
 
   const sectionSuccess = document.querySelector('.success');
 
-  sectionSuccess.addEventListener(('click'), (evt) => {
-    if (evt.target.closest('.success__button') || evt.target.closest('.success')) {
-      sectionSuccess.remove();
-      document.removeEventListener('keydown', keyDownSuccessListener);
-    }
-  });
-
-  const KeyDownEscHandler = (evt) => {
+  const keyDownEscHandler = (evt) => {
     if (evt.key === 'Escape') {
       evt.preventDefault();
       sectionSuccess.remove();
+      document.removeEventListener('keydown', keyDownEscHandler);
     }
   };
 
-  keyDownSuccessListener = KeyDownEscHandler;
+  sectionSuccess.addEventListener(('click'), (evt) => {
+    if (evt.target.closest('.success__button') || evt.target.closest('.success')) {
+      sectionSuccess.remove();
+      document.removeEventListener('keydown', keyDownEscHandler);
+    }
+  });
 
-  document.addEventListener('keydown', keyDownSuccessListener);
+  document.addEventListener('keydown', keyDownEscHandler);
 };
 
 

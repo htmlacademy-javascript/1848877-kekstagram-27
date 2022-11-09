@@ -1,5 +1,4 @@
 const DATA_INCOMING_SERVER = 'https://27.javascript.pages.academy/kekstagram/data';
-const ERROR_MESSAGE_FORM = 'Не удалось отправить форму. Попробуйте ещё раз';
 const DATA_SEND_SERVER = 'https://27.javascript.pages.academy/kekstagram';
 
 export const getData = (onSuccess, onError) => {
@@ -24,10 +23,10 @@ export const sendData = (onSuccess, onError, body) => {
     if (response.ok) {
       onSuccess();
     } else {
-      onError(ERROR_MESSAGE_FORM);
+      onError();
     }
   }).catch(() => {
-    onError(ERROR_MESSAGE_FORM);
+    onError();
   });
 };
 

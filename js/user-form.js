@@ -41,10 +41,10 @@ uploadCancel.addEventListener('click', closeUploadPopupHandler);
 
 //Функция объявлена декларативно, чтобы могла быть вызвана раньше, чем она объявлена
 function keyDownHandler (evt) {
-  const focusHashTag = document.activeElement === hashtagField;
-  const focusComment = document.activeElement === commentsField;
+  const isHashTagsFocused = document.activeElement === hashtagField;
+  const isCommentFocused = document.activeElement === commentsField;
 
-  if (evt.key === 'Escape' && !focusHashTag && !focusComment) {
+  if (evt.key === 'Escape' && !isHashTagsFocused && !isCommentFocused) {
     evt.preventDefault();
     closeUploadPopupHandler();
   }

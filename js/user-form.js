@@ -13,7 +13,7 @@ const uploadCancel = document.querySelector('#upload-cancel');
 const imgUploadForm = document.querySelector('.img-upload__form');
 const submitButton = document.querySelector('.img-upload__submit');
 
-const showUploadPopupHandler = () => {
+const showUploadPopupHandler = (evt) => {
   imgUploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', keyDownHandler);
@@ -22,7 +22,7 @@ const showUploadPopupHandler = () => {
   resetSlider();
 
   setDefaultValue();
-  uploadFiles();
+  uploadFiles(evt.target.files[0]);
 };
 
 export const closeUploadPopupHandler = () => {

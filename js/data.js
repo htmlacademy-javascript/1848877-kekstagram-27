@@ -9,6 +9,7 @@ export const initData = (cbSuccess) => {
   getData(
     (photos) => {
       dataList = photos.slice(0, NUMBER_OF_PHOTOS);
+
       if (cbSuccess) {cbSuccess(dataList);}
     },
     () => {

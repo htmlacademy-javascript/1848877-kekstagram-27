@@ -1,13 +1,11 @@
 import {debounce, getRandomUniqeElement} from './util.js';
 import {renderPhotos} from './miniatures.js';
-import {dataList} from './data.js';
+import { readData } from './data.js';
 
 const QUANTITY_PICTURE_RANDOM = 10;
 
 const filters = document.querySelector('.img-filters');
 const filterDefault = document.querySelector('#filter-default');
-const filterRandom = document.querySelector('#filter-random');
-const filterDescussed = document.querySelector('#filter-discussed');
 const imageFilters = document.querySelector('.img-filters');
 
 let activeFilter = filterDefault;
@@ -33,18 +31,17 @@ imageFilters.addEventListener('click', debounce ((evt) => {
 
   const filter = evt.target.id;
   activeFilter = evt.target;
-  
   activeFilter.classList.add('img-filters__button--active');
 
   switch (filter) {
     case 'filter-default':
-      renderPhotos(filterByDefault([...dataList]));
+      renderPhotos(filterByDefault([...readData()]));
       break;
     case 'filter-random':
-      renderPhotos(filterByRandom([...dataList]));
+      renderPhotos(filterByRandom([...readData()]));
       break;
     case 'filter-discussed':
-      renderPhotos(filterByDiscuss([...dataList]));
+      renderPhotos(filterByDiscuss([...readData()]));
       break;
   }
 }));

@@ -3,7 +3,7 @@ import {showAlertMessage} from './user-form.js';
 
 const NUMBER_OF_PHOTOS = 25;
 
-export let dataList = [];
+let dataList = [];
 
 export const initData = (cbSuccess) => {
   getData (
@@ -16,4 +16,4 @@ export const initData = (cbSuccess) => {
     });
 };
 
-
+export const readData = () => dataList;

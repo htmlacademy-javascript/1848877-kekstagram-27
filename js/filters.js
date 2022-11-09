@@ -33,18 +33,17 @@ imageFilters.addEventListener('click', debounce ((evt) => {
 
   const filter = evt.target.id;
   activeFilter = evt.target;
+  
+  activeFilter.classList.add('img-filters__button--active');
 
   switch (filter) {
     case 'filter-default':
-      filterDefault.classList.add('img-filters__button--active');
       renderPhotos(filterByDefault([...dataList]));
       break;
     case 'filter-random':
-      filterRandom.classList.add('img-filters__button--active');
       renderPhotos(filterByRandom([...dataList]));
       break;
     case 'filter-discussed':
-      filterDescussed.classList.add('img-filters__button--active');
       renderPhotos(filterByDiscuss([...dataList]));
       break;
   }

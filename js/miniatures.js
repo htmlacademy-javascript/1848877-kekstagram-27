@@ -1,6 +1,8 @@
 import {renderPictureDialog, keyDownHandler, openBigPicture} from './big-picture.js';
 import { readData } from './data.js';
 
+const NUMBER_OF_PHOTOS = 25;
+
 const thumbnailPicture = document.querySelector('#picture').content.querySelector('.picture');
 const gallery = document.querySelector('.pictures');
 const imageContainer = document.querySelector('.photos-gallery');
@@ -20,7 +22,7 @@ const createPictureElement = (data) => {
 gallery.addEventListener('click', (evt) => {
   const element = evt.target.closest('[data-id]');
   const picture = element
-    ? readData().find((item) => item.id === Number(element.dataset.id))
+    ? readData().slice(0, NUMBER_OF_PHOTOS).find((item) => item.id === Number(element.dataset.id))
     : null;
 
   if (picture) {

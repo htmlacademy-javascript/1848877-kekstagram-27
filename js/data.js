@@ -2,11 +2,13 @@ import {getData} from './api.js';
 import {showAlertMessage} from './modals.js';
 
 let dataList = [];
+export const writeData = (photos) => {dataList = photos;};
+export const readData = () => dataList;
 
 export const initData = (cbSuccess) => {
   getData(
     (photos) => {
-      dataList = photos;
+      writeData(photos);
 
       if (cbSuccess) {cbSuccess(dataList);}
     },
@@ -15,4 +17,4 @@ export const initData = (cbSuccess) => {
     });
 };
 
-export const readData = () => dataList;
+

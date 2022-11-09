@@ -14,8 +14,6 @@ export const displayFilters = () => {
   filters.classList.remove('img-filters--inactive');
 };
 
-const filterByDefault = (pictures) => pictures;
-
 const filterByRandom = (pictures) => {
   const pictureArrayCopy = [...pictures];
 
@@ -35,7 +33,7 @@ imageFilters.addEventListener('click', debounce ((evt) => {
 
   switch (filter) {
     case 'filter-default':
-      renderPhotos(filterByDefault([...readData()]));
+      renderPhotos([...readData()]);
       break;
     case 'filter-random':
       renderPhotos(filterByRandom([...readData()]));

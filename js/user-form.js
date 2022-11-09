@@ -13,7 +13,7 @@ const uploadCancel = document.querySelector('#upload-cancel');
 const imgUploadForm = document.querySelector('.img-upload__form');
 const submitButton = document.querySelector('.img-upload__submit');
 
-const showUploadPopup = () => {
+const showUploadPopupHandler = () => {
   imgUploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', keyDownHandler);
@@ -25,7 +25,7 @@ const showUploadPopup = () => {
   uploadFiles();
 };
 
-export const closeUploadPopup = () => {
+export const closeUploadPopupHandler = () => {
   imgUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
 
@@ -35,9 +35,9 @@ export const closeUploadPopup = () => {
   resetFormValidation();
 };
 
-uploadFile.addEventListener('change', showUploadPopup);
+uploadFile.addEventListener('change', showUploadPopupHandler);
 
-uploadCancel.addEventListener('click', closeUploadPopup);
+uploadCancel.addEventListener('click', closeUploadPopupHandler);
 
 //Функция объявлена декларативно, чтобы могла быть вызвана раньше, чем она объявлена
 function keyDownHandler (evt) {
@@ -46,7 +46,7 @@ function keyDownHandler (evt) {
 
   if (evt.key === 'Escape' && !focusHashTag && !focusComment) {
     evt.preventDefault();
-    closeUploadPopup();
+    closeUploadPopupHandler();
   }
 }
 
@@ -63,7 +63,7 @@ const enableSubmitButton = () => {
 const onSuccess = () => {
   enableSubmitButton();
   showSuccessMessage();
-  closeUploadPopup();
+  closeUploadPopupHandler();
 };
 
 const onError = () => {

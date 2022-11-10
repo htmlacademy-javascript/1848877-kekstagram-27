@@ -1,5 +1,5 @@
 const DATA_INCOMING_SERVER = 'https://27.javascript.pages.academy/kekstagram/data';
-const DATA_SEND_SERVER = 'https://27.javascript.pages.academy/kekstagram';
+const DATA_SEND_SERVER = 'https://27.javascript.pages.academy/kekstagra';
 
 export const getData = (onSuccess, onError) => {
   fetch(DATA_INCOMING_SERVER)

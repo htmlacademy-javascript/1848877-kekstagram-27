@@ -25,7 +25,7 @@ export const showErrorMessage = () => {
   const sectionError = document.querySelector('.error');
 
   sectionError.addEventListener(('click'), (evt) => {
-    if (evt.target.closest('.error__button') || evt.target.closest('.error')) {
+    if (evt.target.closest('.error__button') || evt.target.closest('.error') && !evt.target.closest('.error__inner')) {
       sectionError.remove();
       document.removeEventListener('keydown', (keyEvt) => triggerOnEsc(keyEvt, sectionError));
     }
@@ -43,7 +43,7 @@ export const showSuccessMessage = () => {
   const sectionSuccess = document.querySelector('.success');
 
   sectionSuccess.addEventListener(('click'), (evt) => {
-    if (evt.target.closest('.success__button') || evt.target.closest('.success')) {
+    if (evt.target.closest('.success__button') || evt.target.closest('.success') && !evt.target.closest('.success__inner')) {
       sectionSuccess.remove();
       document.removeEventListener('keydown', (keyEvt) => triggerOnEsc(keyEvt, sectionSuccess));
     }

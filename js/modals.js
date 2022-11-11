@@ -1,4 +1,4 @@
-
+const ALERT_SHOW_TIME = 5000;
 
 const errorTemplate = document.querySelector('#error').content.querySelector('.error');
 const successTemplate = document.querySelector('#success').content.querySelector('.success');
@@ -6,8 +6,6 @@ const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 
 const successFragment = document.createDocumentFragment();
 const errorFragment = document.createDocumentFragment();
-
-const ALERT_SHOW_TIME = 5000;
 
 const triggerOnEsc = (evt, element) => {
   if (evt.key === 'Escape') {

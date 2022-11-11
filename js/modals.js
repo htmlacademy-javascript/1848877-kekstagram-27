@@ -8,11 +8,16 @@ const errorFragment = document.createDocumentFragment();
 
 let activeDialog = null;
 
+export const getActiveDialog = () => activeDialog;
+export const setActiveDialog = (element) => {activeDialog = element;};
+
 function triggerOnEsc(evt) {
   if (evt.key === 'Escape') {
     evt.preventDefault();
-    if (activeDialog) {
-      activeDialog.remove();
+    evt.stopImmediatePropagation();
+    if (getActiveDialog()) {
+      getActiveDialog().remove();
+      setActiveDialog(null);
     }
     document.removeEventListener('keydown', triggerOnEsc);
   }
@@ -24,11 +29,12 @@ export const showErrorMessage = () => {
   document.body.appendChild(errorFragment);
 
   const sectionError = document.querySelector('.error');
-  activeDialog = sectionError;
+  setActiveDialog(sectionError);
 
   sectionError.addEventListener(('click'), (evt) => {
     if (evt.target.getAttribute('data-dialog-close')) {
       sectionError.remove();
+      setActiveDialog(null);
       document.removeEventListener('keydown', triggerOnEsc);
     }
   });
@@ -43,11 +49,12 @@ export const showSuccessMessage = () => {
   document.body.appendChild(successFragment);
 
   const sectionSuccess = document.querySelector('.success');
-  activeDialog = sectionSuccess;
+  setActiveDialog(sectionSuccess);
 
   sectionSuccess.addEventListener(('click'), (evt) => {
     if (evt.target.getAttribute('data-dialog-close')) {
       sectionSuccess.remove();
+      setActiveDialog(null);
       document.removeEventListener('keydown', triggerOnEsc);
     }
   });

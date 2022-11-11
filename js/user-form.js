@@ -2,7 +2,7 @@ import {pristine, commentsField, hashtagField, resetFormValidation} from './vali
 import {setDefaultValue} from './resize-image.js';
 import {resetSliderInit, resetSlider, resetEffect} from './picture-effect.js';
 import {savePhoto} from './api.js';
-import {showErrorMessage, showSuccessMessage} from './modals.js';
+import {showErrorMessage, showSuccessMessage, getActiveDialog} from './modals.js';
 import {uploadFiles} from './upload-file.js';
 
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
@@ -33,7 +33,6 @@ const closeUploadPopupHandler = () => {
   imgUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', keyDownHandler);
-
 };
 
 //Функция объявлена декларативно, чтобы могла быть вызвана раньше, чем она объявлена
@@ -42,7 +41,7 @@ function keyDownHandler (evt) {
   const isCommentFocused = document.activeElement === commentsField;
   const isReadyForClose = !isHashTagsFocused && !isCommentFocused;
 
-  if (evt.key === 'Escape' && isReadyForClose) {
+  if (evt.key === 'Escape' && isReadyForClose && !getActiveDialog()) {
     evt.preventDefault();
     resetUploadForm();
     closeUploadPopupHandler();

@@ -1,21 +1,27 @@
+const ALERT_SHOW_TIME = 5000;
+
 const errorTemplate = document.querySelector('#error').content.querySelector('.error');
 const successTemplate = document.querySelector('#success').content.querySelector('.success');
-const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 
 const successFragment = document.createDocumentFragment();
 const errorFragment = document.createDocumentFragment();
 
-const ALERT_SHOW_TIME = 5000;
+let activeDialog = null;
 
-const triggerOnEsc = (evt, element) => {
+export const getActiveDialog = () => activeDialog;
+export const setActiveDialog = (element) => {activeDialog = element;};
+
+function triggerOnEsc(evt) {
   if (evt.key === 'Escape') {
     evt.preventDefault();
-    if (element) {
-      element.remove();
+    evt.stopImmediatePropagation();
+    if (getActiveDialog()) {
+      getActiveDialog().remove();
+      setActiveDialog(null);
     }
-    document.removeEventListener('keydown', (keyEvt) => triggerOnEsc(keyEvt, element));
+    document.removeEventListener('keydown', triggerOnEsc);
   }
-};
+}
 
 export const showErrorMessage = () => {
   const errorMessage = errorTemplate.cloneNode(true);
@@ -23,17 +29,18 @@ export const showErrorMessage = () => {
   document.body.appendChild(errorFragment);
 
   const sectionError = document.querySelector('.error');
+  setActiveDialog(sectionError);
 
   sectionError.addEventListener(('click'), (evt) => {
-    if (evt.target.closest('.error__button') || evt.target.closest('.error') && !evt.target.closest('.error__inner')) {
+    if (evt.target.getAttribute('data-dialog-close')) {
       sectionError.remove();
-      document.removeEventListener('keydown', (keyEvt) => triggerOnEsc(keyEvt, sectionError));
+      setActiveDialog(null);
+      document.removeEventListener('keydown', triggerOnEsc);
     }
   });
 
-  document.addEventListener('keydown', (keyEvt) => triggerOnEsc(keyEvt, sectionError));
+  document.addEventListener('keydown', triggerOnEsc);
 };
-
 
 export const showSuccessMessage = () => {
   const successMessage = successTemplate.cloneNode(true);
@@ -41,15 +48,17 @@ export const showSuccessMessage = () => {
   document.body.appendChild(successFragment);
 
   const sectionSuccess = document.querySelector('.success');
+  setActiveDialog(sectionSuccess);
 
   sectionSuccess.addEventListener(('click'), (evt) => {
-    if (evt.target.closest('.success__button') || evt.target.closest('.success') && !evt.target.closest('.success__inner')) {
+    if (evt.target.getAttribute('data-dialog-close')) {
       sectionSuccess.remove();
-      document.removeEventListener('keydown', (keyEvt) => triggerOnEsc(keyEvt, sectionSuccess));
+      setActiveDialog(null);
+      document.removeEventListener('keydown', triggerOnEsc);
     }
   });
 
-  document.addEventListener('keydown', (keyEvt) => triggerOnEsc(keyEvt, sectionSuccess));
+  document.addEventListener('keydown', triggerOnEsc);
 };
 
 export const showAlertMessage = (message) => {
@@ -62,31 +71,3 @@ export const showAlertMessage = (message) => {
     alertContainer.remove();
   }, ALERT_SHOW_TIME);
 };
-
-export const showUploadPopup = (cb, isReadyForClose, cbClose) => {
-  imgUploadOverlay.classList.remove('hidden');
-  document.body.classList.add('modal-open');
-  document.addEventListener('keydown', (evt) => keyDownHandler(evt, isReadyForClose, cbClose));
-  if (cb) {
-    cb();
-  }
-};
-
-export const closeUploadPopup = (cb, isReadyForClose) => {
-  imgUploadOverlay.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-  document.removeEventListener('keydown', (evt) => keyDownHandler(evt, isReadyForClose, cb));
-  if (cb) {
-    cb();
-  }
-};
-
-//Функция объявлена декларативно, чтобы могла быть вызвана раньше, чем она объявлена
-function keyDownHandler (evt, isReadyForClose, cbClose) {
-  if (evt.key === 'Escape' && isReadyForClose) {
-    evt.preventDefault();
-    if (cbClose) {
-      closeUploadPopup(cbClose, isReadyForClose);
-    }
-  }
-}

@@ -7,4 +7,4 @@ export const debounce = (callback, timeoutDelay = 500) => {
   };
 };
 
-export const getRandomUniqeElement = (arr) => [...arr].sort(() => Math.random() - 0.5);
+export const shuffle = (arr) => [...arr].sort(() => Math.random() - 0.5);

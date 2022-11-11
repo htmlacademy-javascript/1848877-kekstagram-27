@@ -1,8 +1,8 @@
-const DATA_INCOMING_SERVER = 'https://27.javascript.pages.academy/kekstagram/data';
-const DATA_SEND_SERVER = 'https://27.javascript.pages.academy/kekstagram';
+const SAVE_PHOTO_URL = 'https://27.javascript.pages.academy/kekstagram/data';
+const GET_PHOTOS_URL = 'https://27.javascript.pages.academy/kekstagra';
 
-export const getData = (onSuccess, onError) => {
-  fetch(DATA_INCOMING_SERVER)
+export const getPhotos = (onSuccess, onError) => {
+  fetch(SAVE_PHOTO_URL)
     .then((response) => response.json())
     .then((photo) => {
       onSuccess(photo);
@@ -12,9 +12,9 @@ export const getData = (onSuccess, onError) => {
     });
 };
 
-export const sendData = (onSuccess, onError, body) => {
+export const savePhoto = (onSuccess, onError, body) => {
   fetch(
-    DATA_SEND_SERVER,
+    GET_PHOTOS_URL,
     {
       method: 'POST',
       body,

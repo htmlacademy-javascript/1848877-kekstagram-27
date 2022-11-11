@@ -1,20 +1,20 @@
-import {getData} from './api.js';
+import {getPhotos} from './api.js';
+import { displayFilters } from './filters.js';
+import { renderPhotos } from './gallery.js';
 import {showAlertMessage} from './modals.js';
 
 let dataList = [];
-export const writeData = (photos) => {dataList = photos;};
-export const readData = () => dataList;
 
-export const initData = (cbSuccess) => {
-  getData(
-    (photos) => {
-      writeData(photos);
+export const updateDataList = (photos) => {dataList = photos;};
+export const getDataList = () => dataList;
 
-      if (cbSuccess) {cbSuccess(dataList);}
-    },
-    () => {
-      showAlertMessage('Не удалось загрузить данные с сервера');
-    });
+const onError = () => showAlertMessage('Не удалось загрузить данные с сервера');
+
+const onSuccess = (photos) => {
+  updateDataList(photos);
+  renderPhotos(dataList);
+  displayFilters();
 };
 
+getPhotos(onSuccess, onError);
 

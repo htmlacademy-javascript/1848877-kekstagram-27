@@ -6,15 +6,17 @@ const successTemplate = document.querySelector('#success').content.querySelector
 const successFragment = document.createDocumentFragment();
 const errorFragment = document.createDocumentFragment();
 
-const triggerOnEsc = (evt, element) => {
+let activeDialog = null;
+
+function triggerOnEsc(evt) {
   if (evt.key === 'Escape') {
     evt.preventDefault();
-    if (element) {
-      element.remove();
+    if (activeDialog) {
+      activeDialog.remove();
     }
-    document.removeEventListener('keydown', (keyEvt) => triggerOnEsc(keyEvt, element));
+    document.removeEventListener('keydown', triggerOnEsc);
   }
-};
+}
 
 export const showErrorMessage = () => {
   const errorMessage = errorTemplate.cloneNode(true);
@@ -22,15 +24,16 @@ export const showErrorMessage = () => {
   document.body.appendChild(errorFragment);
 
   const sectionError = document.querySelector('.error');
+  activeDialog = sectionError;
 
   sectionError.addEventListener(('click'), (evt) => {
     if (evt.target.getAttribute('data-dialog-close')) {
       sectionError.remove();
-      document.removeEventListener('keydown', (keyEvt) => triggerOnEsc(keyEvt, sectionError));
+      document.removeEventListener('keydown', triggerOnEsc);
     }
   });
 
-  document.addEventListener('keydown', (keyEvt) => triggerOnEsc(keyEvt, sectionError));
+  document.addEventListener('keydown', triggerOnEsc);
 };
 
 
@@ -40,15 +43,16 @@ export const showSuccessMessage = () => {
   document.body.appendChild(successFragment);
 
   const sectionSuccess = document.querySelector('.success');
+  activeDialog = sectionSuccess;
 
   sectionSuccess.addEventListener(('click'), (evt) => {
     if (evt.target.getAttribute('data-dialog-close')) {
       sectionSuccess.remove();
-      document.removeEventListener('keydown', (keyEvt) => triggerOnEsc(keyEvt, sectionSuccess));
+      document.removeEventListener('keydown', triggerOnEsc);
     }
   });
 
-  document.addEventListener('keydown', (keyEvt) => triggerOnEsc(keyEvt, sectionSuccess));
+  document.addEventListener('keydown', triggerOnEsc);
 };
 
 export const showAlertMessage = (message) => {

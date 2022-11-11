@@ -20,7 +20,7 @@ const resetUploadForm = () => {
 const showUploadPopupHandler = (evt) => {
   imgUploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
-  document.addEventListener('keydown', (keyEvt) => keyDownHandler(keyEvt, resetUploadForm));
+  document.addEventListener('keydown', keyDownHandler);
 
   resetSliderInit();
   resetSlider();
@@ -32,7 +32,7 @@ const showUploadPopupHandler = (evt) => {
 const closeUploadPopupHandler = () => {
   imgUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  document.removeEventListener('keydown', (evt) => keyDownHandler(evt, resetUploadForm));
+  document.removeEventListener('keydown', keyDownHandler);
 
 };
 
@@ -44,7 +44,7 @@ function keyDownHandler (evt) {
 
   if (evt.key === 'Escape' && isReadyForClose) {
     evt.preventDefault();
-
+    resetUploadForm();
     closeUploadPopupHandler();
   }
 }

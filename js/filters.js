@@ -1,4 +1,4 @@
-import {debounce, getRandomUniqeElement} from './util.js';
+import {debounce, shuffle} from './util.js';
 import {renderPhotos} from './gallery.js';
 import { getDataList } from './data.js';
 
@@ -14,13 +14,15 @@ export const displayFilters = () => {
   filters.classList.remove('img-filters--inactive');
 };
 
-const filterByRandom = (pictures) => {
-  const pictureArrayCopy = [...pictures];
+const getCopyImagesArray = () => getDataList().slice();
 
-  return getRandomUniqeElement(pictureArrayCopy).slice(0, QUANTITY_PICTURE_RANDOM);
+const filterByRandom = (pictures) => {
+  const pictureArrayCopy = pictures.slice();
+
+  return shuffle(pictureArrayCopy).slice(0, QUANTITY_PICTURE_RANDOM);
 };
 
-const filterByDiscuss = (pictures) => [...pictures].sort(
+const filterByDiscuss = (pictures) => pictures.slice().sort(
   (pictureA, pictureB) => pictureB.comments.length - pictureA.comments.length
 );
 
@@ -33,13 +35,13 @@ imageFilters.addEventListener('click', debounce ((evt) => {
 
   switch (filter) {
     case 'filter-default':
-      renderPhotos([...getDataList()]);
+      renderPhotos(getCopyImagesArray());
       break;
     case 'filter-random':
-      renderPhotos(filterByRandom([...getDataList()]));
+      renderPhotos(filterByRandom(getCopyImagesArray()));
       break;
     case 'filter-discussed':
-      renderPhotos(filterByDiscuss([...getDataList()]));
+      renderPhotos(filterByDiscuss(getCopyImagesArray()));
       break;
   }
 }));

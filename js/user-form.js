@@ -2,11 +2,11 @@ import {pristine, commentsField, hashtagField, resetFormValidation} from './vali
 import {setDefaultValue} from './resize-image.js';
 import {resetSliderInit, resetSlider, resetEffect} from './picture-effect.js';
 import {savePhoto} from './api.js';
-import {closeUploadPopup, showErrorMessage, showSuccessMessage, showUploadPopup} from './modals.js';
+import {showErrorMessage, showSuccessMessage} from './modals.js';
 import {uploadFiles} from './upload-file.js';
 
+const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 const uploadFile = document.querySelector('#upload-file');
-
 const uploadCancel = document.querySelector('#upload-cancel');
 const imgUploadForm = document.querySelector('.img-upload__form');
 const submitButton = document.querySelector('.img-upload__submit');
@@ -18,26 +18,36 @@ const resetUploadForm = () => {
 };
 
 const showUploadPopupHandler = (evt) => {
+  imgUploadOverlay.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+  document.addEventListener('keydown', (keyEvt) => keyDownHandler(keyEvt, resetUploadForm));
+
+  resetSliderInit();
+  resetSlider();
+
+  setDefaultValue();
+  uploadFiles(evt.target.files[0]);
+};
+
+const closeUploadPopupHandler = () => {
+  imgUploadOverlay.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  document.removeEventListener('keydown', (evt) => keyDownHandler(evt, resetUploadForm));
+
+};
+
+//Функция объявлена декларативно, чтобы могла быть вызвана раньше, чем она объявлена
+function keyDownHandler (evt) {
   const isHashTagsFocused = document.activeElement === hashtagField;
   const isCommentFocused = document.activeElement === commentsField;
   const isReadyForClose = !isHashTagsFocused && !isCommentFocused;
 
-  showUploadPopup(() => {
-    resetSliderInit();
-    resetSlider();
+  if (evt.key === 'Escape' && isReadyForClose) {
+    evt.preventDefault();
 
-    setDefaultValue();
-    uploadFiles(evt.target.files[0]);
-  }, isReadyForClose, resetUploadForm);
-};
-
-export const closeUploadPopupHandler = () => {
-  const isHashTagsFocused = document.activeElement === hashtagField;
-  const isCommentFocused = document.activeElement === commentsField;
-  const isReadyForClose = !isHashTagsFocused && !isCommentFocused;
-
-  closeUploadPopup(resetUploadForm, isReadyForClose);
-};
+    closeUploadPopupHandler();
+  }
+}
 
 uploadFile.addEventListener('change', showUploadPopupHandler);
 
@@ -78,3 +88,4 @@ imgUploadForm.addEventListener('submit', (evt) => {
     );
   }
 });
+

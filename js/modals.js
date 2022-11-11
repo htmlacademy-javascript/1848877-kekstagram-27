@@ -42,7 +42,6 @@ export const showErrorMessage = () => {
   document.addEventListener('keydown', triggerOnEsc);
 };
 
-
 export const showSuccessMessage = () => {
   const successMessage = successTemplate.cloneNode(true);
   successFragment.appendChild(successMessage);

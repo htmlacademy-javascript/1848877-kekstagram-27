@@ -1,6 +1,6 @@
 import {debounce, getRandomUniqeElement} from './util.js';
-import {renderPhotos} from './miniatures.js';
-import { readData } from './data.js';
+import {renderPhotos} from './gallery.js';
+import { getDataList } from './data.js';
 
 const QUANTITY_PICTURE_RANDOM = 10;
 
@@ -33,13 +33,13 @@ imageFilters.addEventListener('click', debounce ((evt) => {
 
   switch (filter) {
     case 'filter-default':
-      renderPhotos([...readData()]);
+      renderPhotos([...getDataList()]);
       break;
     case 'filter-random':
-      renderPhotos(filterByRandom([...readData()]));
+      renderPhotos(filterByRandom([...getDataList()]));
       break;
     case 'filter-discussed':
-      renderPhotos(filterByDiscuss([...readData()]));
+      renderPhotos(filterByDiscuss([...getDataList()]));
       break;
   }
 }));

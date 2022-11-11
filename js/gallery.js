@@ -1,5 +1,5 @@
 import {renderPictureDialog, keyDownHandler, openBigPicture} from './big-picture.js';
-import { readData } from './data.js';
+import { getDataList } from './data.js';
 
 const NUMBER_OF_PHOTOS = 25;
 
@@ -22,7 +22,7 @@ const createPictureElement = (data) => {
 gallery.addEventListener('click', (evt) => {
   const element = evt.target.closest('[data-id]');
   const picture = element
-    ? readData().slice(0, NUMBER_OF_PHOTOS).find((item) => item.id === Number(element.dataset.id))
+    ? getDataList().slice(0, NUMBER_OF_PHOTOS).find((item) => item.id === Number(element.dataset.id))
     : null;
 
   if (picture) {

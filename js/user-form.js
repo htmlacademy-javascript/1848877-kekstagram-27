@@ -1,7 +1,7 @@
 import {pristine, commentsField, hashtagField, resetFormValidation} from './validation.js';
 import {setDefaultValue} from './resize-image.js';
 import {resetSliderInit, resetSlider, resetEffect} from './picture-effect.js';
-import {sendData} from './api.js';
+import {savePhoto} from './api.js';
 import {closeUploadPopup, showErrorMessage, showSuccessMessage, showUploadPopup} from './modals.js';
 import {uploadFiles} from './upload-file.js';
 
@@ -71,7 +71,7 @@ imgUploadForm.addEventListener('submit', (evt) => {
 
   if (isFormValid) {
     disableSubmitButton();
-    sendData(
+    savePhoto(
       onSuccess,
       onError,
       new FormData(evt.target)

@@ -1,17 +1,17 @@
-import {getData} from './api.js';
+import {getPhotos} from './api.js';
 import {showAlertMessage} from './modals.js';
 
-let updateDataList = [];
+let dataList = [];
 
-export const writeData = (photos) => {updateDataList = photos;};
-export const getDataList = () => updateDataList;
+export const updateDataList = (photos) => {dataList = photos;};
+export const getDataList = () => dataList;
 
 export const initData = (cbSuccess) => {
-  getData(
+  getPhotos(
     (photos) => {
-      writeData(photos);
+      updateDataList(photos);
 
-      if (cbSuccess) {cbSuccess(updateDataList);}
+      if (cbSuccess) {cbSuccess(dataList);}
     },
     () => {
       showAlertMessage('Не удалось загрузить данные с сервера');

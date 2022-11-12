@@ -1,5 +1,5 @@
 const SAVE_PHOTO_URL = 'https://27.javascript.pages.academy/kekstagram/data';
-const GET_PHOTOS_URL = 'https://27.javascript.pages.academy/kekstagra';
+const GET_PHOTOS_URL = 'https://27.javascript.pages.academy/kekstagram';
 
 export const getPhotos = (onSuccess, onError) => {
   fetch(SAVE_PHOTO_URL)

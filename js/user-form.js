@@ -66,6 +66,7 @@ const onSuccess = () => {
   enableSubmitButton();
   showSuccessMessage();
   closeUploadPopupHandler();
+  resetUploadForm();
 };
 
 const onError = () => {

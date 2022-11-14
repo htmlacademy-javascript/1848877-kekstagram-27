@@ -3,9 +3,6 @@ const ALERT_SHOW_TIME = 5000;
 const errorTemplate = document.querySelector('#error').content.querySelector('.error');
 const successTemplate = document.querySelector('#success').content.querySelector('.success');
 
-const successFragment = document.createDocumentFragment();
-const errorFragment = document.createDocumentFragment();
-
 let activeDialog = null;
 
 export const getActiveDialog = () => activeDialog;
@@ -15,18 +12,17 @@ const setActiveDialog = (element) => {activeDialog = element;};
 function triggerOnEscHandler(evt) {
   if (evt.key === 'Escape') {
     evt.preventDefault();
-    if (getActiveDialog()) {
-      getActiveDialog().remove();
-      setActiveDialog(null);
-    }
+
+    getActiveDialog().remove();
+    setActiveDialog(null);
+
     document.removeEventListener('keydown', triggerOnEscHandler);
   }
 }
 
 export const showErrorMessage = () => {
   const errorMessage = errorTemplate.cloneNode(true);
-  errorFragment.appendChild(errorMessage);
-  document.body.appendChild(errorFragment);
+  document.body.appendChild(errorMessage);
 
   const sectionError = document.querySelector('.error');
   setActiveDialog(sectionError);
@@ -44,8 +40,7 @@ export const showErrorMessage = () => {
 
 export const showSuccessMessage = () => {
   const successMessage = successTemplate.cloneNode(true);
-  successFragment.appendChild(successMessage);
-  document.body.appendChild(successFragment);
+  document.body.appendChild(successMessage);
 
   const sectionSuccess = document.querySelector('.success');
   setActiveDialog(sectionSuccess);

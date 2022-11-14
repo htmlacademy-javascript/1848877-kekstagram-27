@@ -14,7 +14,7 @@ export const displayFilters = () => {
   filters.classList.remove('img-filters--inactive');
 };
 
-const getCopyImagesArray = () => getDataList().slice();
+const shallowArrayCopy = () => getDataList().slice();
 
 const filterByRandom = (pictures) => {
   const pictureArrayCopy = pictures.slice();
@@ -35,13 +35,13 @@ imageFilters.addEventListener('click', debounce ((evt) => {
 
   switch (filter) {
     case 'filter-default':
-      renderPhotos(getCopyImagesArray());
+      renderPhotos(shallowArrayCopy());
       break;
     case 'filter-random':
-      renderPhotos(filterByRandom(getCopyImagesArray()));
+      renderPhotos(filterByRandom(shallowArrayCopy()));
       break;
     case 'filter-discussed':
-      renderPhotos(filterByDiscuss(getCopyImagesArray()));
+      renderPhotos(filterByDiscuss(shallowArrayCopy()));
       break;
   }
 }));

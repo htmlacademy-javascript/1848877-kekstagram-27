@@ -11,6 +11,7 @@ let activeDialog = null;
 export const getActiveDialog = () => activeDialog;
 export const setActiveDialog = (element) => {activeDialog = element;};
 
+//Функция объявлена декларативно, чтобы могла быть вызвана раньше, чем она объявлена
 function triggerOnEsc(evt) {
   if (evt.key === 'Escape') {
     evt.preventDefault();

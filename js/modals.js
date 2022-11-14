@@ -6,6 +6,7 @@ const successTemplate = document.querySelector('#success').content.querySelector
 let activeDialog = null;
 
 export const getActiveDialog = () => activeDialog;
+
 const setActiveDialog = (element) => {activeDialog = element;};
 
 //Функция объявлена декларативно, чтобы могла быть вызвана раньше, чем она объявлена
@@ -21,8 +22,9 @@ function triggerOnEscHandler(evt) {
 function closeDialog (element) {
   element.remove();
   setActiveDialog(null);
+
   document.removeEventListener('keydown', triggerOnEscHandler);
-};
+}
 
 export const showErrorMessage = () => {
   const errorMessage = errorTemplate.cloneNode(true);

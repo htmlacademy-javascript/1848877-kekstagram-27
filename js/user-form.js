@@ -24,7 +24,6 @@ const showUploadPopupHandler = (evt) => {
 
   resetSliderInit();
   resetSlider();
-
   setDefaultValue();
   uploadFiles(evt.target.files[0]);
 };
@@ -32,6 +31,7 @@ const showUploadPopupHandler = (evt) => {
 const closeUploadPopupHandler = () => {
   imgUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
+  resetUploadForm();
   document.removeEventListener('keydown', keyDownHandler);
 };
 

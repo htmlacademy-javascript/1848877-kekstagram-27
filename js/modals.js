@@ -13,12 +13,16 @@ function triggerOnEscHandler(evt) {
   if (evt.key === 'Escape') {
     evt.preventDefault();
 
-    getActiveDialog().remove();
-    setActiveDialog(null);
-
-    document.removeEventListener('keydown', triggerOnEscHandler);
+    closeDialog(getActiveDialog());
   }
 }
+
+//Функция объявлена декларативно, чтобы могла быть вызвана раньше, чем она объявлена
+function closeDialog (element) {
+  element.remove();
+  setActiveDialog(null);
+  document.removeEventListener('keydown', triggerOnEscHandler);
+};
 
 export const showErrorMessage = () => {
   const errorMessage = errorTemplate.cloneNode(true);
@@ -29,9 +33,7 @@ export const showErrorMessage = () => {
 
   sectionError.addEventListener(('click'), (evt) => {
     if (evt.target.getAttribute('data-dialog-close')) {
-      sectionError.remove();
-      setActiveDialog(null);
-      document.removeEventListener('keydown', triggerOnEscHandler);
+      closeDialog(sectionError);
     }
   });
 
@@ -47,9 +49,7 @@ export const showSuccessMessage = () => {
 
   sectionSuccess.addEventListener(('click'), (evt) => {
     if (evt.target.getAttribute('data-dialog-close')) {
-      sectionSuccess.remove();
-      setActiveDialog(null);
-      document.removeEventListener('keydown', triggerOnEscHandler);
+      closeDialog(sectionSuccess);
     }
   });
 
@@ -66,3 +66,5 @@ export const showAlertMessage = (message) => {
     alertContainer.remove();
   }, ALERT_SHOW_TIME);
 };
+
+

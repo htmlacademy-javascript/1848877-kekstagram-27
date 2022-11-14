@@ -9,18 +9,17 @@ const errorFragment = document.createDocumentFragment();
 let activeDialog = null;
 
 export const getActiveDialog = () => activeDialog;
-export const setActiveDialog = (element) => {activeDialog = element;};
+const setActiveDialog = (element) => {activeDialog = element;};
 
 //Функция объявлена декларативно, чтобы могла быть вызвана раньше, чем она объявлена
-function triggerOnEsc(evt) {
+function triggerOnEscHandler(evt) {
   if (evt.key === 'Escape') {
     evt.preventDefault();
-    evt.stopImmediatePropagation();
     if (getActiveDialog()) {
       getActiveDialog().remove();
       setActiveDialog(null);
     }
-    document.removeEventListener('keydown', triggerOnEsc);
+    document.removeEventListener('keydown', triggerOnEscHandler);
   }
 }
 
@@ -36,11 +35,11 @@ export const showErrorMessage = () => {
     if (evt.target.getAttribute('data-dialog-close')) {
       sectionError.remove();
       setActiveDialog(null);
-      document.removeEventListener('keydown', triggerOnEsc);
+      document.removeEventListener('keydown', triggerOnEscHandler);
     }
   });
 
-  document.addEventListener('keydown', triggerOnEsc);
+  document.addEventListener('keydown', triggerOnEscHandler);
 };
 
 export const showSuccessMessage = () => {
@@ -55,11 +54,11 @@ export const showSuccessMessage = () => {
     if (evt.target.getAttribute('data-dialog-close')) {
       sectionSuccess.remove();
       setActiveDialog(null);
-      document.removeEventListener('keydown', triggerOnEsc);
+      document.removeEventListener('keydown', triggerOnEscHandler);
     }
   });
 
-  document.addEventListener('keydown', triggerOnEsc);
+  document.addEventListener('keydown', triggerOnEscHandler);
 };
 
 export const showAlertMessage = (message) => {

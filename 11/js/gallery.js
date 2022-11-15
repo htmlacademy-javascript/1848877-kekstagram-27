@@ -8,7 +8,7 @@ const gallery = document.querySelector('.pictures');
 const imageContainer = document.querySelector('.photos-gallery');
 
 const createPictureElement = (data) => {
-  const { url, comments, likes, id} = data;
+  const {url, comments, likes, id} = data;
   const photoElement = thumbnailPicture.cloneNode(true);
 
   photoElement.dataset.id = id;

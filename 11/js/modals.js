@@ -3,62 +3,58 @@ const ALERT_SHOW_TIME = 5000;
 const errorTemplate = document.querySelector('#error').content.querySelector('.error');
 const successTemplate = document.querySelector('#success').content.querySelector('.success');
 
-const successFragment = document.createDocumentFragment();
-const errorFragment = document.createDocumentFragment();
-
 let activeDialog = null;
 
 export const getActiveDialog = () => activeDialog;
-export const setActiveDialog = (element) => {activeDialog = element;};
 
-function triggerOnEsc(evt) {
+const setActiveDialog = (element) => {activeDialog = element;};
+
+const onKeydownHandler = (evt) => {
   if (evt.key === 'Escape') {
     evt.preventDefault();
-    evt.stopImmediatePropagation();
-    if (getActiveDialog()) {
-      getActiveDialog().remove();
-      setActiveDialog(null);
-    }
-    document.removeEventListener('keydown', triggerOnEsc);
+
+    closeDialog(getActiveDialog());
   }
+};
+
+//Функция объявлена декларативно, чтобы могла быть вызвана раньше, чем она объявлена
+function closeDialog (element) {
+  element.remove();
+  setActiveDialog(null);
+
+  document.removeEventListener('keydown', onKeydownHandler);
 }
 
 export const showErrorMessage = () => {
   const errorMessage = errorTemplate.cloneNode(true);
-  errorFragment.appendChild(errorMessage);
-  document.body.appendChild(errorFragment);
+  document.body.appendChild(errorMessage);
 
   const sectionError = document.querySelector('.error');
   setActiveDialog(sectionError);
 
   sectionError.addEventListener(('click'), (evt) => {
     if (evt.target.getAttribute('data-dialog-close')) {
-      sectionError.remove();
-      setActiveDialog(null);
-      document.removeEventListener('keydown', triggerOnEsc);
+      closeDialog(sectionError);
     }
   });
 
-  document.addEventListener('keydown', triggerOnEsc);
+  document.addEventListener('keydown', onKeydownHandler);
 };
 
 export const showSuccessMessage = () => {
   const successMessage = successTemplate.cloneNode(true);
-  successFragment.appendChild(successMessage);
-  document.body.appendChild(successFragment);
+  document.body.appendChild(successMessage);
 
   const sectionSuccess = document.querySelector('.success');
   setActiveDialog(sectionSuccess);
 
   sectionSuccess.addEventListener(('click'), (evt) => {
     if (evt.target.getAttribute('data-dialog-close')) {
-      sectionSuccess.remove();
-      setActiveDialog(null);
-      document.removeEventListener('keydown', triggerOnEsc);
+      closeDialog(sectionSuccess);
     }
   });
 
-  document.addEventListener('keydown', triggerOnEsc);
+  document.addEventListener('keydown', onKeydownHandler);
 };
 
 export const showAlertMessage = (message) => {
@@ -71,3 +67,5 @@ export const showAlertMessage = (message) => {
     alertContainer.remove();
   }, ALERT_SHOW_TIME);
 };
+
+

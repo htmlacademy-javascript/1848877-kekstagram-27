@@ -9,21 +9,20 @@ export const getActiveDialog = () => activeDialog;
 
 const setActiveDialog = (element) => {activeDialog = element;};
 
-//Функция объявлена декларативно, чтобы могла быть вызвана раньше, чем она объявлена
-function triggerOnEscHandler(evt) {
+const onKeydownHandler = (evt) => {
   if (evt.key === 'Escape') {
     evt.preventDefault();
 
     closeDialog(getActiveDialog());
   }
-}
+};
 
 //Функция объявлена декларативно, чтобы могла быть вызвана раньше, чем она объявлена
 function closeDialog (element) {
   element.remove();
   setActiveDialog(null);
 
-  document.removeEventListener('keydown', triggerOnEscHandler);
+  document.removeEventListener('keydown', onKeydownHandler);
 }
 
 export const showErrorMessage = () => {
@@ -39,7 +38,7 @@ export const showErrorMessage = () => {
     }
   });
 
-  document.addEventListener('keydown', triggerOnEscHandler);
+  document.addEventListener('keydown', onKeydownHandler);
 };
 
 export const showSuccessMessage = () => {
@@ -55,7 +54,7 @@ export const showSuccessMessage = () => {
     }
   });
 
-  document.addEventListener('keydown', triggerOnEscHandler);
+  document.addEventListener('keydown', onKeydownHandler);
 };
 
 export const showAlertMessage = (message) => {

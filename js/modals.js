@@ -5,22 +5,20 @@ const successTemplate = document.querySelector('#success').content.querySelector
 
 let activeDialog = null;
 
-export const getActiveDialog = () => activeDialog;
-
-const setActiveDialog = (element) => {activeDialog = element;};
+export const isActiveDialog = () => !!activeDialog;
 
 const onKeydownHandler = (evt) => {
   if (evt.key === 'Escape') {
     evt.preventDefault();
 
-    closeDialog(getActiveDialog());
+    closeDialog(activeDialog);
   }
 };
 
 //Функция объявлена декларативно, чтобы могла быть вызвана раньше, чем она объявлена
 function closeDialog (element) {
   element.remove();
-  setActiveDialog(null);
+  activeDialog = null;
 
   document.removeEventListener('keydown', onKeydownHandler);
 }
@@ -30,7 +28,7 @@ export const showErrorMessage = () => {
   document.body.appendChild(errorMessage);
 
   const sectionError = document.querySelector('.error');
-  setActiveDialog(sectionError);
+  activeDialog = sectionError;
 
   sectionError.addEventListener(('click'), (evt) => {
     if (evt.target.getAttribute('data-dialog-close')) {
@@ -46,7 +44,7 @@ export const showSuccessMessage = () => {
   document.body.appendChild(successMessage);
 
   const sectionSuccess = document.querySelector('.success');
-  setActiveDialog(sectionSuccess);
+  activeDialog = sectionSuccess;
 
   sectionSuccess.addEventListener(('click'), (evt) => {
     if (evt.target.getAttribute('data-dialog-close')) {

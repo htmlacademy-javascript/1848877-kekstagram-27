@@ -23,15 +23,15 @@ export const setDefaultValue = () => {
 const zoomIn = () => {
   if (scale < SCALE_MAX) {
     scale += SCALE_STEP;
+    scalePreview(scale);
   }
-  scalePreview(scale);
 };
 
 const zoomDown = () => {
   if (scale > SCALE_MIN) {
     scale -= SCALE_STEP;
+    scalePreview(scale);
   }
-  scalePreview(scale);
 };
 
 scaleContainer.addEventListener('click', (evt) => {

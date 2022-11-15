@@ -1,54 +1,58 @@
 import {pristine, commentsField, hashtagField, resetFormValidation} from './validation.js';
 import {setDefaultValue} from './resize-image.js';
 import {resetSliderInit, resetSlider, resetEffect} from './picture-effect.js';
-import {sendData} from './api.js';
-import {showErrorMessage, showSuccessMessage} from './message-upload.js';
+import {savePhoto} from './api.js';
+import {showErrorMessage, showSuccessMessage, isActiveDialog} from './modals.js';
 import {uploadFiles} from './upload-file.js';
 
-const ALERT_SHOW_TIME = 5000;
-
-const uploadFile = document.querySelector('#upload-file');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
+const uploadFile = document.querySelector('#upload-file');
 const uploadCancel = document.querySelector('#upload-cancel');
 const imgUploadForm = document.querySelector('.img-upload__form');
 const submitButton = document.querySelector('.img-upload__submit');
 
-const showUploadPopup = () => {
+const resetUploadForm = () => {
+  imgUploadForm.reset();
+  resetEffect();
+  resetFormValidation();
+};
+
+const showUploadPopupHandler = (evt) => {
   imgUploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', keyDownHandler);
 
   resetSliderInit();
   resetSlider();
-
   setDefaultValue();
-  uploadFiles();
+  uploadFiles(evt.target.files[0]);
 };
 
-export const closeUploadPopup = () => {
+const closeUploadPopupHandler = () => {
   imgUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
 
+  resetUploadForm();
+
   document.removeEventListener('keydown', keyDownHandler);
-  imgUploadForm.reset();
-  resetEffect();
-  resetFormValidation();
 };
-
-uploadFile.addEventListener('change', showUploadPopup);
-
-uploadCancel.addEventListener('click', closeUploadPopup);
 
 //Функция объявлена декларативно, чтобы могла быть вызвана раньше, чем она объявлена
 function keyDownHandler (evt) {
-  const focusHashTag = document.activeElement === hashtagField;
-  const focusComment = document.activeElement === commentsField;
+  const isHashTagsFocused = document.activeElement === hashtagField;
+  const isCommentFocused = document.activeElement === commentsField;
+  const isReadyForClose = !isHashTagsFocused && !isCommentFocused;
 
-  if (evt.key === 'Escape' && !focusHashTag && !focusComment) {
+  if (evt.key === 'Escape' && isReadyForClose && !isActiveDialog()) {
     evt.preventDefault();
-    closeUploadPopup();
+    resetUploadForm();
+    closeUploadPopupHandler();
   }
 }
+
+uploadFile.addEventListener('change', showUploadPopupHandler);
+
+uploadCancel.addEventListener('click', closeUploadPopupHandler);
 
 const disableSubmitButton = () => {
   submitButton.disabled = true;
@@ -63,7 +67,8 @@ const enableSubmitButton = () => {
 const onSuccess = () => {
   enableSubmitButton();
   showSuccessMessage();
-  closeUploadPopup();
+  closeUploadPopupHandler();
+  resetUploadForm();
 };
 
 const onError = () => {
@@ -78,22 +83,11 @@ imgUploadForm.addEventListener('submit', (evt) => {
 
   if (isFormValid) {
     disableSubmitButton();
-    sendData(
+    savePhoto(
       onSuccess,
       onError,
       new FormData(evt.target)
     );
   }
 });
-
-export const showAlertMessage = (message) => {
-  const alertContainer = document.createElement('div');
-  alertContainer.classList.add('error-message');
-  alertContainer.textContent = message;
-  document.body.append(alertContainer);
-
-  setTimeout(() => {
-    alertContainer.remove();
-  }, ALERT_SHOW_TIME);
-};
 

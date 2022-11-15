@@ -1424,3 +1424,9 @@ main {
   font-size: 30px;
   padding: 10px 3px;
  }
+
+ .pristine-error {
+  margin-top: 0;
+  padding-top: 20px;
+  padding-bottom: 20px;
+ }

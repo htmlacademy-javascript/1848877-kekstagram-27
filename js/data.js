@@ -3,16 +3,16 @@ import { displayFilters } from './filters.js';
 import { renderPhotos } from './gallery.js';
 import {showAlertMessage} from './modals.js';
 
-let dataList = [];
+let dataLists = [];
 
-export const updateDataList = (photos) => {dataList = photos;};
-export const getDataList = () => dataList;
+export const updateDataList = (photos) => {dataLists = photos;};
+export const getDataList = () => dataLists;
 
 const onError = () => showAlertMessage('Не удалось загрузить данные с сервера');
 
 const onSuccess = (photos) => {
   updateDataList(photos);
-  renderPhotos(dataList);
+  renderPhotos(dataLists);
   displayFilters();
 };
 

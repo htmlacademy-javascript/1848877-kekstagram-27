@@ -4,45 +4,45 @@ import { getDataList } from './data.js';
 
 const QUANTITY_PICTURE_RANDOM = 10;
 
-const filters = document.querySelector('.img-filters');
 const filterDefault = document.querySelector('#filter-default');
 const imageFilters = document.querySelector('.img-filters');
+const filterRandom = document.querySelector('#filter-random');
+const filterDiscussed = document.querySelector('#filter-discussed');
 
 let activeFilter = filterDefault;
 
 export const displayFilters = () => {
-  filters.classList.remove('img-filters--inactive');
+  imageFilters.classList.remove('img-filters--inactive');
 };
 
-const shallowArrayCopy = () => getDataList().slice();
+const filterByRandom = (pictures) => shuffle([...pictures]).slice(0, QUANTITY_PICTURE_RANDOM);
 
-const filterByRandom = (pictures) => {
-  const pictureArrayCopy = pictures.slice();
+const filterByDiscuss = (pictures) =>
+  [...pictures]
+    .sort(
+      (pictureA, pictureB) => pictureB.comments.length - pictureA.comments.length
+    );
 
-  return shuffle(pictureArrayCopy).slice(0, QUANTITY_PICTURE_RANDOM);
-};
+const onFilterChange = debounce ((evt) => {
+  const filter = evt.target.closest('.img-filters__button');
 
-const filterByDiscuss = (pictures) => pictures.slice().sort(
-  (pictureA, pictureB) => pictureB.comments.length - pictureA.comments.length
-);
+  if(filter && (filter === filterRandom || activeFilter !== filter)) {
+    activeFilter.classList.remove('img-filters__button--active');
+    filter.classList.add('img-filters__button--active');
+    activeFilter = filter;
 
-imageFilters.addEventListener('click', debounce ((evt) => {
-  activeFilter.classList.remove('img-filters__button--active');
-
-  const filter = evt.target.id;
-  activeFilter = evt.target;
-  activeFilter.classList.add('img-filters__button--active');
-
-  switch (filter) {
-    case 'filter-default':
-      renderPhotos(shallowArrayCopy());
-      break;
-    case 'filter-random':
-      renderPhotos(filterByRandom(shallowArrayCopy()));
-      break;
-    case 'filter-discussed':
-      renderPhotos(filterByDiscuss(shallowArrayCopy()));
-      break;
+    switch (filter) {
+      case filterDefault:
+        renderPhotos(getDataList());
+        break;
+      case filterRandom:
+        renderPhotos(filterByRandom(getDataList()));
+        break;
+      case filterDiscussed:
+        renderPhotos(filterByDiscuss(getDataList()));
+        break;
+    }
   }
-}));
+});
 
+imageFilters.addEventListener('click', onFilterChange);

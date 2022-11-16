@@ -64,14 +64,14 @@ const enableSubmitButton = () => {
   submitButton.textContent = 'Опубликовать';
 };
 
-const onSuccess = () => {
+const getOnSuccess = () => {
   enableSubmitButton();
   showSuccessMessage();
   closeUploadPopupHandler();
   resetUploadForm();
 };
 
-const onError = () => {
+const getOnError = () => {
   showErrorMessage();
   enableSubmitButton();
 };
@@ -84,8 +84,8 @@ imgUploadForm.addEventListener('submit', (evt) => {
   if (isFormValid) {
     disableSubmitButton();
     savePhoto(
-      onSuccess,
-      onError,
+      getOnSuccess,
+      getOnError,
       new FormData(evt.target)
     );
   }

@@ -30,7 +30,7 @@ const createComment = ({ avatar, name, message }) => {
   return socialComment;
 };
 
-const initComments = (comments) => {
+const initiateComments = (comments) => {
   displayedLength = comments.length < MAX_NUMBER_OF_COMMENT ? comments.length
     : MAX_NUMBER_OF_COMMENT;
 
@@ -50,7 +50,7 @@ const renderComments = () => {
 export const renderPictureComments = ({comments}) => {
   visibleComments = comments;
 
-  initComments(comments);
+  initiateComments(comments);
   renderComments();
   updateCommentState();
 };

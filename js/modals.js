@@ -31,7 +31,7 @@ export const showErrorMessage = () => {
   activeDialog = sectionError;
 
   sectionError.addEventListener(('click'), (evt) => {
-    if (evt.target.getAttribute('data-dialog-close')) {
+    if (evt.target.hasAttribute('data-dialog-close')) {
       closeDialog(sectionError);
     }
   });
@@ -47,7 +47,7 @@ export const showSuccessMessage = () => {
   activeDialog = sectionSuccess;
 
   sectionSuccess.addEventListener(('click'), (evt) => {
-    if (evt.target.getAttribute('data-dialog-close')) {
+    if (evt.target.hasAttribute('data-dialog-close')) {
       closeDialog(sectionSuccess);
     }
   });

@@ -5,7 +5,7 @@ import {showAlertMessage} from './modals.js';
 
 let dataLists = [];
 
-export const updateDataList = (photos) => {dataLists = photos;};
+const updateDataList = (photos) => {dataLists = photos;};
 export const getDataList = () => dataLists;
 
 const onError = () => showAlertMessage('Не удалось загрузить данные с сервера');

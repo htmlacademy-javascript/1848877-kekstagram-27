@@ -6,7 +6,7 @@ export const commentsField = document.querySelector('.text__description');
 export const hashtagField = document.querySelector('.text__hashtags');
 const imgUploadForm = document.querySelector('.img-upload__form');
 
-export const isMaxLength = (string, maxLength) => string.length <= maxLength;
+const isMaxLength = (string, maxLength) => string.length <= maxLength;
 
 export const pristine = new Pristine(imgUploadForm, {
   classTo: 'img-upload__field-wrapper',

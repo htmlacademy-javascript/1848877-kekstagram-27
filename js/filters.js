@@ -23,7 +23,7 @@ const filterByDiscuss = (pictures) =>
       (pictureA, pictureB) => pictureB.comments.length - pictureA.comments.length
     );
 
-const FilterChangeHandler = debounce ((evt) => {
+const filterChangeHandler = debounce ((evt) => {
   const filter = evt.target.closest('.img-filters__button');
 
   if(filter && (filter === filterRandom || activeFilter !== filter)) {
@@ -45,4 +45,4 @@ const FilterChangeHandler = debounce ((evt) => {
   }
 });
 
-imageFilters.addEventListener('click', FilterChangeHandler);
+imageFilters.addEventListener('click', filterChangeHandler);

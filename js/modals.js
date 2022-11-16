@@ -7,7 +7,7 @@ let activeDialog = null;
 
 export const isActiveDialog = () => !!activeDialog;
 
-const onKeydownHandler = (evt) => {
+const KeyPressHandler = (evt) => {
   if (evt.key === 'Escape') {
     evt.preventDefault();
 
@@ -20,7 +20,7 @@ function closeDialog (element) {
   element.remove();
   activeDialog = null;
 
-  document.removeEventListener('keydown', onKeydownHandler);
+  document.removeEventListener('keydown', KeyPressHandler);
 }
 
 export const showErrorMessage = () => {
@@ -36,7 +36,7 @@ export const showErrorMessage = () => {
     }
   });
 
-  document.addEventListener('keydown', onKeydownHandler);
+  document.addEventListener('keydown', KeyPressHandler);
 };
 
 export const showSuccessMessage = () => {
@@ -52,7 +52,7 @@ export const showSuccessMessage = () => {
     }
   });
 
-  document.addEventListener('keydown', onKeydownHandler);
+  document.addEventListener('keydown', KeyPressHandler);
 };
 
 export const showAlertMessage = (message) => {

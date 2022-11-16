@@ -9,7 +9,7 @@ const socialCommentsLoader = document.querySelector('.social__comments-loader');
 let visibleComments = [];
 let displayedLength = 0;
 
-export const updateCommentState = () => {
+const updateCommentState = () => {
   showComment.textContent = displayedLength;
   commentsCount.textContent = visibleComments.length;
 
@@ -36,7 +36,7 @@ const initComments = (comments) => {
 
 };
 
-export const renderComments = () => {
+const renderComments = () => {
   const commentFragment = document.createDocumentFragment();
 
   ([...visibleComments].splice(0, displayedLength)).forEach((comment) => {

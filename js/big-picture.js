@@ -6,7 +6,7 @@ const socialCaption = document.querySelector('.social__caption');
 const bigPictureImg = document.querySelector('.big-picture__img img');
 const likesCount = document.querySelector('.likes-count');
 
-export const closeBigPicture = () => {
+const closeBigPicture = () => {
   bigPicture.classList.add('hidden');
   document.body.classList.remove('modal-open');
 

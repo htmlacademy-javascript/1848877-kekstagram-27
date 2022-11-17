@@ -1,6 +1,6 @@
 const SCALE_STEP = 25;
-const SCALE_MAX = 100;
 const SCALE_MIN = 25;
+const SCALE_MAX = 100;
 
 const controlValue = document.querySelector('.scale__control--value');
 const imgUploadPreview = document.querySelector('.img-upload__preview img');

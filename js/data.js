@@ -8,13 +8,13 @@ let dataLists = [];
 const updateDataList = (photos) => {dataLists = photos;};
 export const getDataList = () => dataLists;
 
-const getError = () => showAlertMessage('Не удалось загрузить данные с сервера');
+const onError = () => showAlertMessage('Не удалось загрузить данные с сервера');
 
-const getSuccess = (photos) => {
+const onSuccess = (photos) => {
   updateDataList(photos);
   renderPhotos(dataLists);
   displayFilters();
 };
 
-getPhotos(getSuccess, getError);
+getPhotos(onSuccess, onError);
 

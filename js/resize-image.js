@@ -20,14 +20,14 @@ export const setDefaultValue = () => {
   scalePreview(scale);
 };
 
-const enhanceScale = () => {
+const zoomIn = () => {
   if (scale < SCALE_MAX) {
     scale += SCALE_STEP;
     scalePreview(scale);
   }
 };
 
-const reduceScale = () => {
+const zoomDown = () => {
   if (scale > SCALE_MIN) {
     scale -= SCALE_STEP;
     scalePreview(scale);
@@ -37,10 +37,10 @@ const reduceScale = () => {
 scaleContainer.addEventListener('click', (evt) => {
   switch (evt.target) {
     case decreaseScale:
-      reduceScale();
+      zoomDown();
       break;
     case increaseScale:
-      enhanceScale();
+      zoomIn();
       break;
   }
 });
